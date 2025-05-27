@@ -1,1 +1,1 @@
-web: NODE_OPTIONS="--max-old-space-size=512" npm run build && npm start 
+web: NODE_OPTIONS="--max-old-space-size=512" npm run build && PORT=8080 next start -H 0.0.0.0 

@@ -7,6 +7,9 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ['*']
     }
+  },
+  env: {
+    PORT: '8080'
   }
 }
 
