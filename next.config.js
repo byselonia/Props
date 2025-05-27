@@ -10,7 +10,9 @@ const nextConfig = {
   },
   env: {
     PORT: '8080'
-  }
+  },
+  swcMinify: true,
+  poweredByHeader: false
 }
 
 module.exports = nextConfig 
