@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
+  const router = useRouter();
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-white">
@@ -18,24 +18,16 @@ export default function Home() {
         </div>
 
         {/* Center - Tabs */}
-        <div className="flex flex-col space-y-4 w-80">
+        <div className="flex flex-col space-y-8 w-[400px]">
           <button
-            onClick={() => setActiveTab('login')}
-            className={`w-full py-4 px-6 text-center text-lg font-medium transition-colors ${
-              activeTab === 'login'
-                ? 'bg-black text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
+            onClick={() => router.push('/login')}
+            className="w-full py-8 px-10 text-center text-2xl font-medium transition-colors rounded-lg bg-black text-white hover:bg-gray-900"
           >
             Log In
           </button>
           <button
-            onClick={() => setActiveTab('signup')}
-            className={`w-full py-4 px-6 text-center text-lg font-medium transition-colors ${
-              activeTab === 'signup'
-                ? 'bg-black text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
+            onClick={() => router.push('/register')}
+            className="w-full py-8 px-10 text-center text-2xl font-medium transition-colors rounded-lg bg-black text-white hover:bg-gray-900"
           >
             Sign Up
           </button>
