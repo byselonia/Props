@@ -15,6 +15,12 @@ const nextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true
+  },
+  // Disable static page generation
+  staticPageGenerationTimeout: 0,
+  // Disable image optimization
+  images: {
+    unoptimized: true
   }
 }
 
