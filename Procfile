@@ -1,1 +1,1 @@
-web: next start -p 8080 -H 0.0.0.0 
+web: npm run build && npm start 
