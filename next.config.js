@@ -6,12 +6,16 @@ const nextConfig = {
   experimental: {
     serverActions: {
       allowedOrigins: ['*']
-    }
+    },
+    optimizeCss: true,
+    optimizePackageImports: ['@prisma/client']
   },
   env: {
     PORT: '8080'
   },
-  poweredByHeader: false
+  poweredByHeader: false,
+  compress: true,
+  productionBrowserSourceMaps: false
 }
 
 module.exports = nextConfig 
