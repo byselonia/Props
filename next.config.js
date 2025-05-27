@@ -7,7 +7,6 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ['*']
     },
-    optimizeCss: true,
     optimizePackageImports: ['@prisma/client']
   },
   env: {
