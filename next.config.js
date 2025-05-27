@@ -4,7 +4,9 @@ const nextConfig = {
   output: 'standalone',
   distDir: '.next',
   experimental: {
-    serverActions: true
+    serverActions: {
+      allowedOrigins: ['*']
+    }
   }
 }
 
