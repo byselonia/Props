@@ -22,11 +22,6 @@ const nextConfig = {
   images: {
     unoptimized: true
   },
-  // Ensure proper server configuration
-  server: {
-    port: 8080,
-    host: '0.0.0.0'
-  },
   // Add trailing slashes to help with routing
   trailingSlash: true,
   // Ensure proper asset prefix
