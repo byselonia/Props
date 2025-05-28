@@ -6,5 +6,5 @@ buildCommand = "rm -rf node_modules package-lock.json && npm install --legacy-pe
 startCommand = "npm start"
 healthcheckPath = "/"
 healthcheckTimeout = 100
-restartPolicyType = "on-failure"
-restartPolicyMaxRetries = 10 
+restartPolicy = "on-failure"
+maxRetries = 10 
