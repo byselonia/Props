@@ -21,6 +21,11 @@ const nextConfig = {
   // Disable image optimization
   images: {
     unoptimized: true
+  },
+  // Ensure proper server configuration
+  server: {
+    port: 8080,
+    host: '0.0.0.0'
   }
 }
 
