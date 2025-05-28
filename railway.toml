@@ -2,14 +2,16 @@
 [build]
 builder = "nixpacks"
 buildCommand = "npm install --legacy-peer-deps && npm run build"
+nixPkgs = ["nodejs-18_x", "npm-9_x", "openssl"]
 
 [deploy]
-startCommand = "node .next/standalone/server.js"
+startCommand = "NODE_ENV=production node .next/standalone/server.js"
 healthcheckPath = "/"
-healthcheckTimeout = 100
+healthcheckTimeout = 300
 restartPolicy = "on-failure"
 maxRetries = 10
 
 [env]
 PORT = "8080"
-NODE_ENV = "production" 
+NODE_ENV = "production"
+NODE_VERSION = "18.x" 

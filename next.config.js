@@ -26,7 +26,11 @@ const nextConfig = {
   server: {
     port: 8080,
     host: '0.0.0.0'
-  }
+  },
+  // Add trailing slashes to help with routing
+  trailingSlash: true,
+  // Ensure proper asset prefix
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : undefined
 }
 
 module.exports = nextConfig 
