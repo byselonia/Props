@@ -1,1 +1,10 @@
- 
+[build]
+builder = "nixpacks"
+buildCommand = "rm -rf node_modules package-lock.json && npm install --legacy-peer-deps && npm run build"
+
+[deploy]
+startCommand = "npm start"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "on-failure"
+restartPolicyMaxRetries = 10 
