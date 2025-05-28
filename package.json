@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "NODE_OPTIONS='--max-old-space-size=512' NEXT_TELEMETRY_DISABLED=1 prisma generate && prisma migrate deploy && next build",
+    "build": "NODE_OPTIONS='--max-old-space-size=2048' NEXT_TELEMETRY_DISABLED=1 prisma generate && next build",
     "start": "next start -p ${PORT:-8080} -H 0.0.0.0",
     "lint": "next lint",
     "postinstall": "prisma generate"
@@ -13,17 +13,17 @@
     "@auth/prisma-adapter": "^2.9.1",
     "@prisma/client": "^6.8.2",
     "bcryptjs": "^3.0.2",
-    "next": "^15.3.2",
+    "next": "14.1.0",
     "next-auth": "^4.24.11",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "@types/node": "^22.15.21",
-    "@types/react": "^19.1.6",
-    "@types/react-dom": "^19.1.5",
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "prisma": "^6.8.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.3.3"
   }
 }
