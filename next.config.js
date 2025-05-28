@@ -8,7 +8,8 @@ const nextConfig = {
     }
   },
   env: {
-    PORT: '8080'
+    PORT: '8080',
+    HOST: '0.0.0.0'
   },
   typescript: {
     ignoreBuildErrors: true
@@ -30,7 +31,21 @@ const nextConfig = {
   // Add trailing slashes to help with routing
   trailingSlash: true,
   // Ensure proper asset prefix
-  assetPrefix: process.env.NODE_ENV === 'production' ? '' : undefined
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : undefined,
+  // Add proper headers
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+    ];
+  }
 }
 
 module.exports = nextConfig 

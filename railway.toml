@@ -5,8 +5,8 @@ buildCommand = "npm install --legacy-peer-deps && npm run build"
 nixPkgs = ["nodejs-18_x", "npm-9_x", "openssl"]
 
 [deploy]
-startCommand = "NODE_ENV=production node .next/standalone/server.js"
-healthcheckPath = "/"
+startCommand = "NODE_ENV=production PORT=8080 node .next/standalone/server.js"
+healthcheckPath = "/api/health"
 healthcheckTimeout = 300
 restartPolicy = "on-failure"
 maxRetries = 10
@@ -14,4 +14,5 @@ maxRetries = 10
 [env]
 PORT = "8080"
 NODE_ENV = "production"
-NODE_VERSION = "18.x" 
+NODE_VERSION = "18.x"
+HOST = "0.0.0.0" 
