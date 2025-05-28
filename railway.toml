@@ -1,3 +1,4 @@
+# Railway configuration for Props deployment
 [build]
 builder = "nixpacks"
 buildCommand = "npm install --legacy-peer-deps && npm run build"
