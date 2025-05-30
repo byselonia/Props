@@ -1,8 +1,8 @@
 # Railway configuration for Props deployment
 [build]
 builder = "nixpacks"
-buildCommand = "npm install --legacy-peer-deps && npm run build"
-nixPkgs = ["nodejs-18_x", "npm-9_x", "openssl"]
+buildCommand = "npm install --legacy-peer-deps && npx prisma generate && npm run build"
+nixPkgs = ["nodejs-18_x", "npm-9_x", "openssl", "postgresql"]
 
 [deploy]
 startCommand = "npm start"
