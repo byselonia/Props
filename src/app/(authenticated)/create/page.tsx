@@ -2,7 +2,6 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { FootballIcon, BasketballIcon } from "@/app/components/SportIcons";
 
 export default function CreateBetPage() {
   // Mock data for upcoming games - will be replaced with real data
@@ -48,14 +47,18 @@ export default function CreateBetPage() {
     { 
       id: "cfb", 
       name: "CFB", 
-      icon: FootballIcon,
-      color: "bg-[#1a1a1a]"
+      logo: "/images/football-icon.png",
+      color: "bg-[#1a1a1a]",
+      width: 40,
+      height: 40
     },
     { 
       id: "cbb", 
       name: "CBB", 
-      icon: BasketballIcon,
-      color: "bg-[#1a1a1a]"
+      logo: "/images/basketball-icon.png",
+      color: "bg-[#1a1a1a]",
+      width: 40,
+      height: 40
     },
   ];
 
@@ -109,17 +112,13 @@ export default function CreateBetPage() {
                   group-hover:border-[#00ff00] transition-all duration-200
                   overflow-hidden`}
                 >
-                  {sport.logo ? (
-                    <Image
-                      src={sport.logo}
-                      alt={`${sport.name} logo`}
-                      width={sport.width || 40}
-                      height={sport.height || 40}
-                      className="object-contain"
-                    />
-                  ) : (
-                    <sport.icon />
-                  )}
+                  <Image
+                    src={sport.logo}
+                    alt={`${sport.name} logo`}
+                    width={sport.width || 40}
+                    height={sport.height || 40}
+                    className="object-contain"
+                  />
                 </div>
                 <span className="text-white font-medium text-sm">{sport.name}</span>
               </button>
