@@ -1,14 +1,8 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { 
-  TrophyIcon,
-  AcademicCapIcon,
-  StarIcon,
-  BoltIcon,
-  FireIcon,
-  SparklesIcon
-} from "@heroicons/react/24/solid";
+import Image from "next/image";
+import { FootballIcon, BasketballIcon } from "@/app/components/SportIcons";
 
 export default function CreateBetPage() {
   // Mock data for upcoming games - will be replaced with real data
@@ -22,37 +16,37 @@ export default function CreateBetPage() {
     { 
       id: "nfl", 
       name: "NFL", 
-      icon: TrophyIcon,
+      logo: "/images/nfl-logo.png",
       color: "bg-[#1a1a1a]"
     },
     { 
       id: "nba", 
       name: "NBA", 
-      icon: StarIcon,
+      logo: "/images/nba-logo.png",
       color: "bg-[#1a1a1a]"
     },
     { 
       id: "nhl", 
       name: "NHL", 
-      icon: BoltIcon,
+      logo: "/images/nhl-logo.png",
       color: "bg-[#1a1a1a]"
     },
     { 
       id: "mlb", 
       name: "MLB", 
-      icon: FireIcon,
+      logo: "/images/mlb-logo.png",
       color: "bg-[#1a1a1a]"
     },
     { 
       id: "cfb", 
       name: "CFB", 
-      icon: AcademicCapIcon,
+      icon: FootballIcon,
       color: "bg-[#1a1a1a]"
     },
     { 
       id: "cbb", 
       name: "CBB", 
-      icon: SparklesIcon,
+      icon: BasketballIcon,
       color: "bg-[#1a1a1a]"
     },
   ];
@@ -97,23 +91,31 @@ export default function CreateBetPage() {
         <h2 className="text-xl font-semibold text-white mb-4">Select Sport</h2>
         <div className="bg-gray-800 rounded-xl p-6">
           <div className="flex justify-between items-center">
-            {sports.map((sport) => {
-              const Icon = sport.icon;
-              return (
-                <button
-                  key={sport.id}
-                  className="flex flex-col items-center space-y-2 group"
+            {sports.map((sport) => (
+              <button
+                key={sport.id}
+                className="flex flex-col items-center space-y-2 group"
+              >
+                <div className={`w-16 h-16 rounded-full ${sport.color} 
+                  flex items-center justify-center border-2 border-gray-700
+                  group-hover:border-[#00ff00] transition-all duration-200
+                  overflow-hidden`}
                 >
-                  <div className={`w-16 h-16 rounded-full ${sport.color} 
-                    flex items-center justify-center border-2 border-gray-700
-                    group-hover:border-[#00ff00] transition-all duration-200`}
-                  >
-                    <Icon className="h-8 w-8 text-[#00ff00]" />
-                  </div>
-                  <span className="text-white font-medium text-sm">{sport.name}</span>
-                </button>
-              );
-            })}
+                  {sport.logo ? (
+                    <Image
+                      src={sport.logo}
+                      alt={`${sport.name} logo`}
+                      width={40}
+                      height={40}
+                      className="object-contain"
+                    />
+                  ) : (
+                    <sport.icon />
+                  )}
+                </div>
+                <span className="text-white font-medium text-sm">{sport.name}</span>
+              </button>
+            ))}
           </div>
         </div>
       </div>
