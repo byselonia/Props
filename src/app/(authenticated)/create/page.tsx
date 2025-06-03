@@ -17,25 +17,33 @@ export default function CreateBetPage() {
       id: "nfl", 
       name: "NFL", 
       logo: "/images/nfl-logo.png",
-      color: "bg-[#1a1a1a]"
+      color: "bg-[#1a1a1a]",
+      width: 40,
+      height: 40
     },
     { 
       id: "nba", 
       name: "NBA", 
       logo: "/images/nba-logo.png",
-      color: "bg-[#1a1a1a]"
+      color: "bg-[#1a1a1a]",
+      width: 32,
+      height: 32
     },
     { 
       id: "nhl", 
       name: "NHL", 
       logo: "/images/nhl-logo.png",
-      color: "bg-[#1a1a1a]"
+      color: "bg-[#1a1a1a]",
+      width: 40,
+      height: 40
     },
     { 
       id: "mlb", 
       name: "MLB", 
       logo: "/images/mlb-logo.png",
-      color: "bg-[#1a1a1a]"
+      color: "bg-[#1a1a1a]",
+      width: 40,
+      height: 40
     },
     { 
       id: "cfb", 
@@ -105,8 +113,8 @@ export default function CreateBetPage() {
                     <Image
                       src={sport.logo}
                       alt={`${sport.name} logo`}
-                      width={40}
-                      height={40}
+                      width={sport.width || 40}
+                      height={sport.height || 40}
                       className="object-contain"
                     />
                   ) : (
