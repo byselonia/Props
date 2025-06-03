@@ -11,12 +11,12 @@ export default function CreateBetPage() {
   ];
 
   const sports = [
-    { id: "nfl", name: "NFL", color: "bg-blue-600" },
-    { id: "nba", name: "NBA", color: "bg-orange-500" },
-    { id: "nhl", name: "NHL", color: "bg-red-600" },
-    { id: "mlb", name: "MLB", color: "bg-green-600" },
-    { id: "cfb", name: "College Football", color: "bg-purple-600" },
-    { id: "cbb", name: "College Basketball", color: "bg-yellow-500" },
+    { id: "nfl", name: "NFL", color: "from-blue-600 to-blue-700" },
+    { id: "nba", name: "NBA", color: "from-orange-500 to-orange-600" },
+    { id: "nhl", name: "NHL", color: "from-red-600 to-red-700" },
+    { id: "mlb", name: "MLB", color: "from-green-600 to-green-700" },
+    { id: "cfb", name: "College Football", color: "from-purple-600 to-purple-700" },
+    { id: "cbb", name: "College Basketball", color: "from-yellow-500 to-yellow-600" },
   ];
 
   return (
@@ -61,7 +61,9 @@ export default function CreateBetPage() {
           {sports.map((sport) => (
             <button
               key={sport.id}
-              className={`${sport.color} text-white rounded-lg p-4 font-medium hover:opacity-90 transition-opacity`}
+              className={`bg-gradient-to-br ${sport.color} text-white rounded-lg p-6 font-medium 
+                hover:opacity-90 transition-all duration-200 shadow-lg hover:shadow-xl
+                flex items-center justify-center text-lg`}
             >
               {sport.name}
             </button>
