@@ -1,6 +1,14 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { 
+  FootballIcon, 
+  BasketballIcon, 
+  HockeyIcon, 
+  BaseballIcon, 
+  AcademicCapIcon, 
+  TrophyIcon 
+} from "@heroicons/react/24/solid";
 
 export default function CreateBetPage() {
   // Mock data for upcoming games - will be replaced with real data
@@ -11,12 +19,42 @@ export default function CreateBetPage() {
   ];
 
   const sports = [
-    { id: "nfl", name: "NFL", color: "from-blue-600 to-blue-700" },
-    { id: "nba", name: "NBA", color: "from-orange-500 to-orange-600" },
-    { id: "nhl", name: "NHL", color: "from-red-600 to-red-700" },
-    { id: "mlb", name: "MLB", color: "from-green-600 to-green-700" },
-    { id: "cfb", name: "College Football", color: "from-purple-600 to-purple-700" },
-    { id: "cbb", name: "College Basketball", color: "from-yellow-500 to-yellow-600" },
+    { 
+      id: "nfl", 
+      name: "NFL", 
+      icon: FootballIcon,
+      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+    },
+    { 
+      id: "nba", 
+      name: "NBA", 
+      icon: BasketballIcon,
+      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+    },
+    { 
+      id: "nhl", 
+      name: "NHL", 
+      icon: HockeyIcon,
+      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+    },
+    { 
+      id: "mlb", 
+      name: "MLB", 
+      icon: BaseballIcon,
+      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+    },
+    { 
+      id: "cfb", 
+      name: "College Football", 
+      icon: AcademicCapIcon,
+      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+    },
+    { 
+      id: "cbb", 
+      name: "College Basketball", 
+      icon: TrophyIcon,
+      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+    },
   ];
 
   return (
@@ -54,20 +92,24 @@ export default function CreateBetPage() {
         </div>
       </div>
 
-      {/* Sports Buttons */}
+      {/* Sports List */}
       <div className="max-w-2xl mx-auto">
         <h2 className="text-xl font-semibold text-white mb-4">Select Sport</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {sports.map((sport) => (
-            <button
-              key={sport.id}
-              className={`bg-gradient-to-br ${sport.color} text-white rounded-lg p-6 font-medium 
-                hover:opacity-90 transition-all duration-200 shadow-lg hover:shadow-xl
-                flex items-center justify-center text-lg`}
-            >
-              {sport.name}
-            </button>
-          ))}
+        <div className="space-y-2">
+          {sports.map((sport) => {
+            const Icon = sport.icon;
+            return (
+              <button
+                key={sport.id}
+                className={`w-full ${sport.color} text-white rounded-lg p-4 
+                  transition-all duration-200 flex items-center space-x-4
+                  border border-gray-700 hover:border-gray-600`}
+              >
+                <Icon className="h-6 w-6 text-[#00ff00]" />
+                <span className="text-lg font-bold">{sport.name}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
