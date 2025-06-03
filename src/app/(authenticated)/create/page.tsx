@@ -23,37 +23,37 @@ export default function CreateBetPage() {
       id: "nfl", 
       name: "NFL", 
       icon: TrophyIcon,
-      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+      color: "bg-[#1a1a1a]"
     },
     { 
       id: "nba", 
       name: "NBA", 
       icon: StarIcon,
-      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+      color: "bg-[#1a1a1a]"
     },
     { 
       id: "nhl", 
       name: "NHL", 
       icon: BoltIcon,
-      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+      color: "bg-[#1a1a1a]"
     },
     { 
       id: "mlb", 
       name: "MLB", 
       icon: FireIcon,
-      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+      color: "bg-[#1a1a1a]"
     },
     { 
       id: "cfb", 
-      name: "College Football", 
+      name: "CFB", 
       icon: AcademicCapIcon,
-      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+      color: "bg-[#1a1a1a]"
     },
     { 
       id: "cbb", 
-      name: "College Basketball", 
+      name: "CBB", 
       icon: SparklesIcon,
-      color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
+      color: "bg-[#1a1a1a]"
     },
   ];
 
@@ -92,24 +92,29 @@ export default function CreateBetPage() {
         </div>
       </div>
 
-      {/* Sports List */}
+      {/* Sports Selection Box */}
       <div className="max-w-2xl mx-auto">
         <h2 className="text-xl font-semibold text-white mb-4">Select Sport</h2>
-        <div className="space-y-2">
-          {sports.map((sport) => {
-            const Icon = sport.icon;
-            return (
-              <button
-                key={sport.id}
-                className={`w-full ${sport.color} text-white rounded-lg p-4 
-                  transition-all duration-200 flex items-center space-x-4
-                  border border-gray-700 hover:border-gray-600`}
-              >
-                <Icon className="h-6 w-6 text-[#00ff00]" />
-                <span className="text-lg font-bold">{sport.name}</span>
-              </button>
-            );
-          })}
+        <div className="bg-gray-800 rounded-xl p-6">
+          <div className="flex justify-between items-center">
+            {sports.map((sport) => {
+              const Icon = sport.icon;
+              return (
+                <button
+                  key={sport.id}
+                  className="flex flex-col items-center space-y-2 group"
+                >
+                  <div className={`w-16 h-16 rounded-full ${sport.color} 
+                    flex items-center justify-center border-2 border-gray-700
+                    group-hover:border-[#00ff00] transition-all duration-200`}
+                  >
+                    <Icon className="h-8 w-8 text-[#00ff00]" />
+                  </div>
+                  <span className="text-white font-medium text-sm">{sport.name}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
