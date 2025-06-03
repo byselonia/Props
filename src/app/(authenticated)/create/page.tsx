@@ -2,12 +2,12 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { 
-  FootballIcon, 
-  BasketballIcon, 
-  HockeyIcon, 
-  BaseballIcon, 
-  AcademicCapIcon, 
-  TrophyIcon 
+  TrophyIcon,
+  AcademicCapIcon,
+  StarIcon,
+  BoltIcon,
+  FireIcon,
+  SparklesIcon
 } from "@heroicons/react/24/solid";
 
 export default function CreateBetPage() {
@@ -22,25 +22,25 @@ export default function CreateBetPage() {
     { 
       id: "nfl", 
       name: "NFL", 
-      icon: FootballIcon,
+      icon: TrophyIcon,
       color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
     },
     { 
       id: "nba", 
       name: "NBA", 
-      icon: BasketballIcon,
+      icon: StarIcon,
       color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
     },
     { 
       id: "nhl", 
       name: "NHL", 
-      icon: HockeyIcon,
+      icon: BoltIcon,
       color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
     },
     { 
       id: "mlb", 
       name: "MLB", 
-      icon: BaseballIcon,
+      icon: FireIcon,
       color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
     },
     { 
@@ -52,7 +52,7 @@ export default function CreateBetPage() {
     { 
       id: "cbb", 
       name: "College Basketball", 
-      icon: TrophyIcon,
+      icon: SparklesIcon,
       color: "bg-[#1a1a1a] hover:bg-[#2a2a2a]"
     },
   ];
