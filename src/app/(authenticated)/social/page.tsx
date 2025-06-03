@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { PlusIcon, UserPlusIcon, ChatBubbleLeftRightIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, UserPlusIcon, ChatBubbleLeftRightIcon, UserGroupIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export default function SocialPage() {
   const [activeTab, setActiveTab] = useState<'friends' | 'chats'>('friends');
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
+  const [selectedFriend, setSelectedFriend] = useState<{ id: number; name: string } | null>(null);
 
   // Mock data - will be replaced with real data later
   const friends = [
@@ -18,6 +19,16 @@ export default function SocialPage() {
     { id: 1, name: "John Doe", type: "direct", lastMessage: "Hey, how's it going?", time: "2m ago" },
     { id: 2, name: "Gaming Group", type: "group", lastMessage: "Mike: Anyone up for a game?", time: "1h ago" },
   ];
+
+  const handleFriendSelect = (friend: { id: number; name: string }) => {
+    setSelectedFriend(friend);
+    setSelectedChat(friend.id.toString());
+  };
+
+  const handleBack = () => {
+    setSelectedFriend(null);
+    setSelectedChat(null);
+  };
 
   return (
     <div className="h-screen flex">
@@ -64,6 +75,7 @@ export default function SocialPage() {
                 {friends.map((friend) => (
                   <div
                     key={friend.id}
+                    onClick={() => handleFriendSelect(friend)}
                     className="flex items-center justify-between p-3 bg-gray-800 rounded-lg hover:bg-gray-700 cursor-pointer"
                   >
                     <div className="flex items-center gap-3">
@@ -114,12 +126,18 @@ export default function SocialPage() {
 
       {/* Chat Area */}
       <div className="flex-1 flex flex-col bg-gray-900">
-        {selectedChat ? (
+        {selectedFriend ? (
           <>
             {/* Chat Header */}
-            <div className="p-4 border-b border-gray-800">
-              <h2 className="text-xl font-semibold text-white">
-                {chats.find(chat => chat.id.toString() === selectedChat)?.name}
+            <div className="p-4 border-b border-gray-800 flex items-center">
+              <button
+                onClick={handleBack}
+                className="mr-4 p-2 hover:bg-gray-800 rounded-full"
+              >
+                <ArrowLeftIcon className="w-6 h-6 text-white" />
+              </button>
+              <h2 className="text-xl font-semibold text-white flex-1 text-center">
+                {selectedFriend.name}
               </h2>
             </div>
 
@@ -147,7 +165,7 @@ export default function SocialPage() {
           </>
         ) : (
           <div className="flex-1 flex items-center justify-center">
-            <p className="text-gray-400">Select a chat to start messaging</p>
+            <p className="text-gray-400">Select a friend to start chatting</p>
           </div>
         )}
       </div>
