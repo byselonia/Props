@@ -104,7 +104,7 @@ export default function CreateBetPage() {
         <div className="bg-gray-800 rounded-xl p-6">
           <div className="flex justify-between items-center">
             {sports.map((sport) => (
-              <Link key={sport.id} href={sport.id === 'mlb' ? '/authenticated/create/mlb' : '#'}>
+              <Link key={sport.id} href={sport.id === 'mlb' ? '/create/mlb' : '#'}>
                 <button
                   className="flex flex-col items-center space-y-2 group"
                 >

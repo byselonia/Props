@@ -25,7 +25,7 @@ export default function MLBGamesPage() {
     <div className="min-h-screen bg-black text-white p-4">
       {/* Header with Back Button */}
       <div className="flex justify-between items-center mb-6">
-        <Link href="/authenticated/create">
+        <Link href="/create">
           <button className="text-gray-400 hover:text-white">
             &larr; Back
           </button>
