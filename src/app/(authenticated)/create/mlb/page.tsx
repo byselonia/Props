@@ -61,18 +61,6 @@ export default function MLBGamesPage() {
         <div className="w-16"></div> {/* Placeholder for balance */}
       </div>
 
-      {/* Search Bar */}
-      <div className="max-w-6xl mx-auto mb-8">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search MLB teams, games or players..."
-            className="w-full px-4 py-3 pl-12 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
-          />
-          <MagnifyingGlassIcon className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
-        </div>
-      </div>
-
       {/* Upcoming Games Section */}
       <div className="max-w-6xl mx-auto mb-8">
         <h2 className="text-xl font-semibold mb-4">Upcoming Games</h2>

@@ -65,18 +65,6 @@ export default function CreateBetPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 p-4">
-      {/* Search Bar */}
-      <div className="max-w-2xl mx-auto mb-8">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search for teams, players, or games..."
-            className="w-full px-4 py-3 pl-12 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
-          />
-          <MagnifyingGlassIcon className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
-        </div>
-      </div>
-
       {/* Upcoming Games Section */}
       <div className="max-w-2xl mx-auto mb-8">
         <h2 className="text-xl font-semibold text-white mb-4">Upcoming Games</h2>
