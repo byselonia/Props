@@ -1,5 +1,5 @@
 # Railway configuration for Props deployment
-# Updated: Global search bar and balance display
+# Updated: Profile page with balance management
 [build]
 builder = "nixpacks"
 buildCommand = "npm install --legacy-peer-deps && npx prisma generate && npm run build"
