@@ -11,14 +11,41 @@ export default function MLBGamesPage() {
     { id: 'mlb-game-3', homeTeam: 'Chicago Cubs', awayTeam: 'St. Louis Cardinals', time: 'Today, 7:15 PM' },
   ];
 
-  // Mock data for MLB teams
-  const mlbTeams = [
-    { id: 'yankees', name: 'New York Yankees', division: 'AL East' },
-    { id: 'red-sox', name: 'Boston Red Sox', division: 'AL East' },
-    { id: 'dodgers', name: 'Los Angeles Dodgers', division: 'NL West' },
-    { id: 'giants', name: 'San Francisco Giants', division: 'NL West' },
-    { id: 'cubs', name: 'Chicago Cubs', division: 'NL Central' },
-    { id: 'cardinals', name: 'St. Louis Cardinals', division: 'NL Central' },
+  // MLB Teams organized by league
+  const nationalLeagueTeams = [
+    { id: 'diamondbacks', name: 'Arizona Diamondbacks' },
+    { id: 'braves', name: 'Atlanta Braves' },
+    { id: 'cubs', name: 'Chicago Cubs' },
+    { id: 'reds', name: 'Cincinnati Reds' },
+    { id: 'rockies', name: 'Colorado Rockies' },
+    { id: 'dodgers', name: 'Los Angeles Dodgers' },
+    { id: 'marlins', name: 'Miami Marlins' },
+    { id: 'brewers', name: 'Milwaukee Brewers' },
+    { id: 'mets', name: 'New York Mets' },
+    { id: 'phillies', name: 'Philadelphia Phillies' },
+    { id: 'pirates', name: 'Pittsburgh Pirates' },
+    { id: 'padres', name: 'San Diego Padres' },
+    { id: 'giants', name: 'San Francisco Giants' },
+    { id: 'cardinals', name: 'St. Louis Cardinals' },
+    { id: 'nationals', name: 'Washington Nationals' },
+  ];
+
+  const americanLeagueTeams = [
+    { id: 'orioles', name: 'Baltimore Orioles' },
+    { id: 'red-sox', name: 'Boston Red Sox' },
+    { id: 'white-sox', name: 'Chicago White Sox' },
+    { id: 'guardians', name: 'Cleveland Guardians' },
+    { id: 'tigers', name: 'Detroit Tigers' },
+    { id: 'astros', name: 'Houston Astros' },
+    { id: 'royals', name: 'Kansas City Royals' },
+    { id: 'angels', name: 'Los Angeles Angels' },
+    { id: 'twins', name: 'Minnesota Twins' },
+    { id: 'yankees', name: 'New York Yankees' },
+    { id: 'athletics', name: 'Oakland Athletics' },
+    { id: 'mariners', name: 'Seattle Mariners' },
+    { id: 'rays', name: 'Tampa Bay Rays' },
+    { id: 'rangers', name: 'Texas Rangers' },
+    { id: 'blue-jays', name: 'Toronto Blue Jays' },
   ];
 
   return (
@@ -35,7 +62,7 @@ export default function MLBGamesPage() {
       </div>
 
       {/* Search Bar */}
-      <div className="max-w-2xl mx-auto mb-8">
+      <div className="max-w-6xl mx-auto mb-8">
         <div className="relative">
           <input
             type="text"
@@ -47,11 +74,11 @@ export default function MLBGamesPage() {
       </div>
 
       {/* Upcoming Games Section */}
-      <div className="max-w-2xl mx-auto mb-8">
+      <div className="max-w-6xl mx-auto mb-8">
         <h2 className="text-xl font-semibold mb-4">Upcoming Games</h2>
         <div className="space-y-3">
           {upcomingGames.map((game) => (
-            <Link key={game.id} href={`/authenticated/create/mlb/${game.id}`}>
+            <Link key={game.id} href={`/create/mlb/${game.id}`}>
               <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 cursor-pointer">
                 <div className="flex justify-between items-center">
                   <div>
@@ -66,17 +93,35 @@ export default function MLBGamesPage() {
       </div>
 
       {/* MLB Teams Section */}
-      <div className="max-w-2xl mx-auto">
-        <h2 className="text-xl font-semibold mb-4">MLB Teams</h2>
-        <div className="grid grid-cols-2 gap-4">
-          {mlbTeams.map((team) => (
-            <Link key={team.id} href={`/authenticated/create/mlb/team/${team.id}`}>
-              <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 cursor-pointer">
-                <p className="text-lg font-semibold">{team.name}</p>
-                <p className="text-gray-400 text-sm">{team.division}</p>
-              </div>
-            </Link>
-          ))}
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 gap-8">
+          {/* National League */}
+          <div>
+            <h2 className="text-xl font-semibold mb-4 text-blue-400">National League</h2>
+            <div className="space-y-2">
+              {nationalLeagueTeams.map((team) => (
+                <Link key={team.id} href={`/create/mlb/team/${team.id}`}>
+                  <div className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer">
+                    <p className="text-white font-medium">{team.name}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* American League */}
+          <div>
+            <h2 className="text-xl font-semibold mb-4 text-red-400">American League</h2>
+            <div className="space-y-2">
+              {americanLeagueTeams.map((team) => (
+                <Link key={team.id} href={`/create/mlb/team/${team.id}`}>
+                  <div className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 cursor-pointer">
+                    <p className="text-white font-medium">{team.name}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
