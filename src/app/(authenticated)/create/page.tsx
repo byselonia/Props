@@ -104,43 +104,28 @@ export default function CreateBetPage() {
         <div className="bg-gray-800 rounded-xl p-6">
           <div className="flex justify-between items-center">
             {sports.map((sport) => (
-              <button
-                key={sport.id}
-                className="flex flex-col items-center space-y-2 group"
-              >
-                <div className={`w-16 h-16 rounded-full ${sport.color} 
-                  flex items-center justify-center border-2 border-gray-700
-                  group-hover:border-[#00ff00] transition-all duration-200
-                  overflow-hidden`}
+              <Link key={sport.id} href={sport.id === 'mlb' ? '/authenticated/create/mlb' : '#'}>
+                <button
+                  className="flex flex-col items-center space-y-2 group"
                 >
-                  <Image
-                    src={sport.logo}
-                    alt={`${sport.name} logo`}
-                    width={sport.width || 40}
-                    height={sport.height || 40}
-                    className="object-contain"
-                  />
-                </div>
-                <span className="text-white font-medium text-sm">{sport.name}</span>
-              </button>
+                  <div className={`w-16 h-16 rounded-full ${sport.color} 
+                    flex items-center justify-center border-2 border-gray-700
+                    group-hover:border-[#00ff00] transition-all duration-200
+                    overflow-hidden`}
+                  >
+                    <Image
+                      src={sport.logo}
+                      alt={`${sport.name} logo`}
+                      width={sport.width || 40}
+                      height={sport.height || 40}
+                      className="object-contain"
+                    />
+                  </div>
+                  <span className="text-white font-medium text-sm">{sport.name}</span>
+                </button>
+              </Link>
             ))}
           </div>
-        </div>
-      </div>
-
-      <div className="max-w-2xl mx-auto mt-8">
-        <div className="grid grid-cols-2 gap-4">
-          {/* Sport Buttons */}
-          {/* Add specific colors and hover effects */}
-          <Link href="/authenticated/create/mlb">
-            <button className="p-4 rounded-lg text-white font-bold w-full text-xl bg-blue-600 hover:bg-blue-700">
-              MLB
-            </button>
-          </Link>
-
-          <button className="p-4 rounded-lg text-white font-bold w-full text-xl bg-red-600 hover:bg-red-700">
-            {/* ... existing code ... */}
-          </button>
         </div>
       </div>
     </div>
