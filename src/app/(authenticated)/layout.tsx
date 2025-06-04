@@ -18,7 +18,7 @@ export default async function AuthenticatedLayout({
     <div className="min-h-screen bg-black text-white">
       {/* Credits Display */}
       <div className="fixed top-4 right-4 bg-gray-800 px-4 py-2 rounded-lg">
-        <p className="text-white font-medium">Credits: 1000</p>
+        <p className="text-white font-medium">Your Balance (USD): 1000</p>
       </div>
 
       <main className="pb-16">
