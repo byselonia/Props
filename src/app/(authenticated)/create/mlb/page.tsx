@@ -66,7 +66,7 @@ export default function MLBGamesPage() {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search MLB teams or games..."
+            placeholder="Search MLB teams, games or players..."
             className="w-full px-4 py-3 pl-12 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
           />
           <MagnifyingGlassIcon className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
