@@ -172,7 +172,7 @@ export default function PiratesPage() {
           <>
             <div className="mb-8">
               <h2 className="text-xl font-semibold mb-4">Upcoming Games</h2>
-              <div className="space-y-4">
+              <div className="space-y-1">
                 {upcomingGames.map((game) => (
                   <div key={game.id} className="bg-gray-800 p-4 rounded-lg">
                     <div className="flex justify-between items-center">
@@ -211,7 +211,7 @@ export default function PiratesPage() {
             {/* Projected Lineup */}
             <div>
               <h2 className="text-xl font-semibold mb-4 text-center">Projected Lineup</h2>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-1">
                 {projectedLineup.map((player) => (
                   <div key={player.id} className="bg-gray-800 p-4 rounded-lg">
                     <div className="flex justify-between items-center">
@@ -231,7 +231,7 @@ export default function PiratesPage() {
             {/* Pitchers */}
             <div>
               <h2 className="text-xl font-semibold mb-4 text-center">Pitchers</h2>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-1">
                 {pitchers.map((player) => (
                   <div key={player.id} className="bg-gray-800 p-4 rounded-lg">
                     <div className="flex justify-between items-center">
@@ -253,7 +253,7 @@ export default function PiratesPage() {
         {activeTab === 'futures' && (
           <div className="space-y-4">
             <h2 className="text-xl font-semibold mb-4">Futures</h2>
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-1">
               {futures.map((bet) => (
                 <div key={bet.id} className="bg-gray-800 p-4 rounded-lg">
                   <div className="flex justify-between items-center">
