@@ -2,6 +2,7 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function CreateBetPage() {
   // Mock data for upcoming games - will be replaced with real data
@@ -124,6 +125,22 @@ export default function CreateBetPage() {
               </button>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="max-w-2xl mx-auto mt-8">
+        <div className="grid grid-cols-2 gap-4">
+          {/* Sport Buttons */}
+          {/* Add specific colors and hover effects */}
+          <Link href="/authenticated/create/mlb">
+            <button className="p-4 rounded-lg text-white font-bold w-full text-xl bg-blue-600 hover:bg-blue-700">
+              MLB
+            </button>
+          </Link>
+
+          <button className="p-4 rounded-lg text-white font-bold w-full text-xl bg-red-600 hover:bg-red-700">
+            {/* ... existing code ... */}
+          </button>
         </div>
       </div>
     </div>

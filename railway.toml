@@ -2,17 +2,19 @@
 [build]
 builder = "nixpacks"
 buildCommand = "npm install --legacy-peer-deps && npx prisma generate && npm run build"
-nixPkgs = ["nodejs-18_x", "npm-9_x", "openssl", "postgresql"]
 
 [deploy]
 startCommand = "npm start"
 healthcheckPath = "/api/health"
-healthcheckTimeout = 300
-restartPolicy = "on-failure"
-maxRetries = 10
+healthcheckTimeout = 100
+restartPolicyType = "on-failure"
+restartPolicyMaxRetries = 10
 
 [env]
 PORT = "8080"
 NODE_ENV = "production"
 NODE_VERSION = "18.x"
-HOST = "0.0.0.0" 
+HOST = "0.0.0.0"
+
+[nixpacks]
+nixPkgs = ["nodejs", "postgresql"] 
