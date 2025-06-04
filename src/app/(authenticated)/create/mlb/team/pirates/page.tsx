@@ -33,9 +33,31 @@ export default function PiratesPage() {
 
   // Mock data for roster
   const roster = [
-    { id: 1, name: 'Player 1', position: 'Pitcher', number: '22' },
-    { id: 2, name: 'Player 2', position: 'Catcher', number: '33' },
-    { id: 3, name: 'Player 3', position: 'First Base', number: '44' },
+    { id: 1, name: 'Paul Skenes', position: 'Pitcher', number: '30' },
+    { id: 2, name: 'Mitch Keller', position: 'Pitcher', number: '23' },
+    { id: 3, name: 'David Bednar', position: 'Pitcher', number: '51' },
+    { id: 4, name: 'Ryan Borucki', position: 'Pitcher', number: '43' },
+    { id: 5, name: 'Mike Burrows', position: 'Pitcher', number: '53' },
+    { id: 6, name: 'Bailey Falter', position: 'Pitcher', number: '6' },
+    { id: 7, name: 'Caleb Ferguson', position: 'Pitcher', number: '64' },
+    { id: 8, name: 'Andrew Heaney', position: 'Pitcher', number: '45' },
+    { id: 9, name: 'Kyle Nicolas', position: 'Pitcher', number: '66' },
+    { id: 10, name: 'Dennis Santana', position: 'Pitcher', number: '60' },
+    { id: 11, name: 'Chase Shugart', position: 'Pitcher', number: '55' },
+    { id: 12, name: 'Joey Wentz', position: 'Pitcher', number: '34' },
+    { id: 13, name: 'Henry Davis', position: 'Catcher', number: '32' },
+    { id: 14, name: 'Adam Frazier', position: 'Infielder', number: '26' },
+    { id: 15, name: 'Nick Gonzales', position: 'Infielder', number: '39' },
+    { id: 16, name: "Ke'Bryan Hayes", position: 'Infielder', number: '13' },
+    { id: 17, name: 'Spencer Horwitz', position: 'Infielder', number: '2' },
+    { id: 18, name: 'Isiah Kiner-Falefa', position: 'Infielder', number: '7' },
+    { id: 19, name: 'Endy Rodríguez', position: 'Infielder', number: '5' },
+    { id: 20, name: 'Jared Triolo', position: 'Infielder', number: '19' },
+    { id: 21, name: 'Alexander Canario', position: 'Outfielder', number: '29' },
+    { id: 22, name: 'Oneil Cruz', position: 'Outfielder', number: '15' },
+    { id: 23, name: 'Andrew McCutchen', position: 'Outfielder', number: '22' },
+    { id: 24, name: 'Tommy Pham', position: 'Outfielder', number: '28' },
+    { id: 25, name: 'Bryan Reynolds', position: 'Outfielder', number: '10' },
   ];
 
   // Mock data for futures
