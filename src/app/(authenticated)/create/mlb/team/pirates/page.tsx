@@ -81,6 +81,22 @@ export default function PiratesPage() {
     { id: 46, name: 'Jack Suwinski', position: 'Outfielder', number: '65' },
   ];
 
+  // Projected lineup data (based on recent sources)
+  const projectedLineup = [
+    { id: 42, name: 'Oneil Cruz', position: 'SS', number: '15' },
+    { id: 43, name: 'Andrew McCutchen', position: 'DH', number: '22' },
+    { id: 45, name: 'Bryan Reynolds', position: 'RF', number: '10' },
+    { id: 32, name: 'Spencer Horwitz', position: '1B', number: '2' },
+    { id: 41, name: 'Alexander Canario', position: 'LF', number: '29' },
+    { id: 29, name: 'Nick Gonzales', position: '2B', number: '39' },
+    { id: 25, name: 'Henry Davis', position: 'C', number: '32' },
+    { id: 31, name: "Ke'Bryan Hayes", position: '3B', number: '13' },
+    { id: 33, name: 'Isiah Kiner-Falefa', position: 'SS', number: '7' },
+  ];
+
+  // Filter roster to get only pitchers
+  const pitchers = roster.filter(player => player.position === 'Pitcher');
+
   // Mock data for futures
   const futures = [
     { id: 1, type: 'World Series', odds: '+5000' },
@@ -191,22 +207,45 @@ export default function PiratesPage() {
         )}
 
         {activeTab === 'roster' && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold mb-4">Team Roster</h2>
-            <div className="grid grid-cols-1 gap-3">
-              {roster.map((player) => (
-                <div key={player.id} className="bg-gray-800 p-4 rounded-lg">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-lg font-semibold">#{player.number} {player.name}</p>
-                      <p className="text-gray-400">{player.position}</p>
+          <div className="space-y-8">
+            {/* Projected Lineup */}
+            <div>
+              <h2 className="text-xl font-semibold mb-4 text-center">Projected Lineup</h2>
+              <div className="grid grid-cols-1 gap-3">
+                {projectedLineup.map((player) => (
+                  <div key={player.id} className="bg-gray-800 p-4 rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-lg font-semibold">#{player.number} {player.name}</p>
+                        <p className="text-gray-400">{player.position}</p>
+                      </div>
+                      <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                        Player Props
+                      </button>
                     </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-                      Player Props
-                    </button>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+
+            {/* Pitchers */}
+            <div>
+              <h2 className="text-xl font-semibold mb-4 text-center">Pitchers</h2>
+              <div className="grid grid-cols-1 gap-3">
+                {pitchers.map((player) => (
+                  <div key={player.id} className="bg-gray-800 p-4 rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-lg font-semibold">#{player.number} {player.name}</p>
+                        <p className="text-gray-400">{player.position}</p>
+                      </div>
+                      <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                        Player Props
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
