@@ -12,17 +12,26 @@ export const dynamic = 'force-dynamic'; // Disable static rendering
 // }
 
 export default function CreateUsernameAndPasswordPage() {
+  console.log('CreateUsernameAndPasswordPage component rendered');
+
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    console.log('useEffect: setting isClient to true');
     setIsClient(true);
   }, []);
 
+  console.log('isClient state:', isClient);
+
   const searchParams = isClient ? useSearchParams() : null;
+  console.log('searchParams:', searchParams);
+
   const email = searchParams?.get("email");
   const firstName = searchParams?.get("firstName");
   const lastName = searchParams?.get("lastName");
+
+  console.log('email:', email, 'firstName:', firstName, 'lastName:', lastName);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +42,9 @@ export default function CreateUsernameAndPasswordPage() {
   // Redirect back if essential data is missing (e.g., user directly accessed this page)
   // This check now runs only on the client after searchParams is available
   useEffect(() => {
+    console.log('useEffect check: isClient', isClient, 'email', email, 'firstName', firstName, 'lastName', lastName);
     if (isClient && (!email || !firstName || !lastName)) {
+        console.log('Redirecting back to /register due to missing data');
         router.push("/register");
     }
   }, [isClient, email, firstName, lastName, router]);
@@ -83,10 +94,15 @@ export default function CreateUsernameAndPasswordPage() {
     }
   };
 
-  // Don't render until client side to ensure searchParams is available
-  if (!isClient) {
-    return null; // Or a loading spinner
+  // Don't render form content until client side and data is available
+  if (!isClient || !email || !firstName || !lastName) {
+    console.log('Rendering initial state (null or Loading...)');
+    // We are already handling the redirect in the useEffect above
+    return <div>Loading...</div>; // Show loading state
   }
+
+  // If we reach here, it's client-side and data is available, so render the form
+  console.log('Rendering form');
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black py-12 px-4 sm:px-6 lg:px-8">
