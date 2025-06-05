@@ -15,6 +15,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Install required dependencies for Prisma during build
+RUN apk add --no-cache openssl1.1-compat
+
 # Generate Prisma Client
 RUN npx prisma generate
 
@@ -32,8 +35,7 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Install required dependencies for Prisma
-RUN apk add --no-cache openssl1.1-compat
+# Note: openssl1.1-compat is installed in the builder stage now.
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -55,4 +57,4 @@ ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
 # Start the application
-CMD ["npm", "run", "start"] 
+CMD ["npm", "run", "start"]
