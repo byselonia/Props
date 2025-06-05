@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -12,10 +12,16 @@ export async function generateStaticParams() {
 
 export default function CreateUsernameAndPasswordPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email");
-  const firstName = searchParams.get("firstName");
-  const lastName = searchParams.get("lastName");
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const searchParams = isClient ? useSearchParams() : null;
+  const email = searchParams?.get("email");
+  const firstName = searchParams?.get("firstName");
+  const lastName = searchParams?.get("lastName");
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,12 +30,12 @@ export default function CreateUsernameAndPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   // Redirect back if essential data is missing (e.g., user directly accessed this page)
-  if (!email || !firstName || !lastName) {
-    if (typeof window !== 'undefined') {
-      router.push("/register");
+  // This check now runs only on the client after searchParams is available
+  useEffect(() => {
+    if (isClient && (!email || !firstName || !lastName)) {
+        router.push("/register");
     }
-    return null; // Or a loading state/message
-  }
+  }, [isClient, email, firstName, lastName, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,6 +81,11 @@ export default function CreateUsernameAndPasswordPage() {
       setIsLoading(false); // End loading
     }
   };
+
+  // Don't render until client side to ensure searchParams is available
+  if (!isClient) {
+    return null; // Or a loading spinner
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black py-12 px-4 sm:px-6 lg:px-8">
