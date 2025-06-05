@@ -20,7 +20,8 @@ const nextConfig = {
   staticPageGenerationTimeout: 120,
   // Disable image optimization
   images: {
-    unoptimized: true
+    unoptimized: true,
+    domains: ['images.unsplash.com'],
   },
   // Add trailing slashes to help with routing
   trailingSlash: true,
@@ -39,7 +40,8 @@ const nextConfig = {
         ],
       },
     ];
-  }
+  },
+  output: 'standalone',
 }
 
 module.exports = nextConfig 
