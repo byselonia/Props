@@ -14,35 +14,11 @@ export default function RegisterPage() {
     const email = formData.get("email") as string;
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
-    const password = formData.get("password") as string;
 
-    try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          firstName,
-          lastName,
-          password,
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.text();
-        throw new Error(data);
-      }
-
-      router.push("/login");
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("Something went wrong");
-      }
-    }
+    // Navigate to the next step with collected data
+    router.push(
+      `/register/password?email=${email}&firstName=${firstName}&lastName=${lastName}`
+    );
   };
 
   return (
@@ -90,21 +66,8 @@ export default function RegisterPage() {
                 name="email"
                 type="email"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-white focus:border-white focus:z-10 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 rounded-b-md focus:outline-none focus:ring-white focus:border-white focus:z-10 sm:text-sm"
-                placeholder="Password"
+                placeholder="Email address"
               />
             </div>
           </div>
@@ -118,7 +81,7 @@ export default function RegisterPage() {
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
             >
-              Sign up
+              Next
             </button>
           </div>
 
