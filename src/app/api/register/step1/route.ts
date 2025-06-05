@@ -22,7 +22,8 @@ export async function POST(request: Request) {
     // Redirect to the second registration page with data as query parameters
     const redirectPath = `/register/password?email=${encodeURIComponent(email)}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
 
-    return NextResponse.redirect(new URL(redirectPath, baseUrl));
+    // Use 303 See Other to force the browser to use GET for the redirect
+    return NextResponse.redirect(new URL(redirectPath, baseUrl), { status: 303 });
 
   } catch (error) {
     console.error("[REGISTER_STEP1_ERROR]", error);
