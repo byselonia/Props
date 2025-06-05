@@ -16,7 +16,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Install required dependencies for Prisma during build
-RUN apk add --no-cache openssl1.1-compat
+RUN apk add --no-cache libssl1.1
 
 # Generate Prisma Client
 RUN npx prisma generate
