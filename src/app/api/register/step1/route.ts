@@ -8,10 +8,21 @@ export async function POST(request: Request) {
       return new NextResponse("Missing required fields", { status: 400 });
     }
 
-    // Redirect to the second registration page with data as query parameters
-    const redirectUrl = `/register/password?email=${encodeURIComponent(email)}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
+    // Construct the base URL using headers to get the correct host and protocol
+    const protocol = request.headers.get('x-forwarded-proto') || (request.url.startsWith('https') ? 'https' : 'http');
+    const host = request.headers.get('host');
 
-    return NextResponse.redirect(new URL(redirectUrl, request.url));
+    if (!host) {
+      // Fallback or error if host header is missing (shouldn't happen in most environments)
+      return new NextResponse("Host header missing", { status: 500 });
+    }
+
+    const baseUrl = `${protocol}://${host}`;
+
+    // Redirect to the second registration page with data as query parameters
+    const redirectPath = `/register/password?email=${encodeURIComponent(email)}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
+
+    return NextResponse.redirect(new URL(redirectPath, baseUrl));
 
   } catch (error) {
     console.error("[REGISTER_STEP1_ERROR]", error);
