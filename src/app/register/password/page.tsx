@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic'; // Disable static rendering
+
 export default function CreateUsernameAndPasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
