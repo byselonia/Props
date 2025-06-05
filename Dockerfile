@@ -1,8 +1,8 @@
-FROM node:18-alpine AS base
+FROM node:18-slim AS base
 
 # Install dependencies only when needed
 FROM base AS deps
-RUN apk add --no-cache libc6-compat
+RUN apt-get update && apt-get install -y openssl ca-certificates
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -16,7 +16,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Install required dependencies for Prisma during build
-RUN apk add --no-cache libssl1.1
+RUN apt-get update && apt-get install -y openssl ca-certificates
 
 # Generate Prisma Client
 RUN npx prisma generate
@@ -35,7 +35,8 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Note: openssl1.1-compat is installed in the builder stage now.
+# Note: openssl compatibility is installed in the builder stage.
+# RUN apk add --no-cache openssl1.1-compat # Removed from runner stage
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
