@@ -6,6 +6,10 @@ import Link from "next/link";
 
 export const dynamic = 'force-dynamic'; // Disable static rendering
 
+export async function generateStaticParams() {
+  return [];
+}
+
 export default function CreateUsernameAndPasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
