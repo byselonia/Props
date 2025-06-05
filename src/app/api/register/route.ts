@@ -1,15 +1,13 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email, name, password } = body;
+    const { email, firstName, lastName, password } = body;
 
-    if (!email || !name || !password) {
+    if (!email || !firstName || !lastName || !password) {
       return new NextResponse("Missing required fields", { status: 400 });
     }
 
@@ -28,14 +26,20 @@ export async function POST(request: Request) {
     const user = await prisma.user.create({
       data: {
         email,
-        name,
+        firstName,
+        lastName,
         password: hashedPassword
       }
     });
 
-    return NextResponse.json(user);
+    // Don't send the password back in the response
+    const { password: _, ...userWithoutPassword } = user;
+    return NextResponse.json(userWithoutPassword);
   } catch (error) {
-    console.log("[REGISTER_ERROR]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    console.error("[REGISTER_ERROR]", error);
+    return new NextResponse(
+      error instanceof Error ? error.message : "Internal Error",
+      { status: 500 }
+    );
   }
 } 
