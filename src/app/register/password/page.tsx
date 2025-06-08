@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'; // Disable static rendering
 //   return [];
 // }
 
-export default function CreateUsernameAndPasswordPage() {
+function PasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
@@ -195,5 +195,23 @@ export default function CreateUsernameAndPasswordPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+// Loading component
+function Loading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="text-white text-xl">Loading...</div>
+    </div>
+  );
+}
+
+// Main page component
+export default function CreateUsernameAndPasswordPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <PasswordForm />
+    </Suspense>
   );
 } 
