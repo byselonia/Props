@@ -20,7 +20,20 @@ export default function RegisterPage() {
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
 
-    console.log('Form data:', { email, firstName, lastName });
+    // Trim whitespace from all fields
+    const trimmedEmail = email.trim();
+    const trimmedFirstName = firstName.trim();
+    const trimmedLastName = lastName.trim();
+
+    console.log('Form data (before trim):', { email, firstName, lastName });
+    console.log('Form data (after trim):', { trimmedEmail, trimmedFirstName, trimmedLastName });
+
+    // Validate required fields
+    if (!trimmedEmail || !trimmedFirstName || !trimmedLastName) {
+      setError("All fields are required");
+      setIsLoading(false);
+      return;
+    }
 
     try {
       console.log('Making API request to /api/register/step1');
@@ -30,9 +43,9 @@ export default function RegisterPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email,
-          firstName,
-          lastName,
+          email: trimmedEmail,
+          firstName: trimmedFirstName,
+          lastName: trimmedLastName,
         }),
       });
 
@@ -40,6 +53,7 @@ export default function RegisterPage() {
 
       if (!response.ok) {
         const errorText = await response.text();
+        console.error('API error response:', errorText);
         throw new Error(errorText || 'Failed to process registration');
       }
 
