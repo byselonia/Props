@@ -34,24 +34,22 @@ export default function RegisterPage() {
           firstName,
           lastName,
         }),
-        redirect: 'manual', // Prevent automatic redirect
       });
 
       console.log('API response status:', response.status);
-      console.log('API response ok:', response.ok);
+      const data = await response.json();
+      console.log('API response data:', data);
 
       if (!response.ok) {
-        const data = await response.text(); // Get plain text error from backend
-        console.error('API error:', data);
-        throw new Error(data);
+        throw new Error(data.error || 'Failed to process registration');
       }
 
-      // Manually construct the redirect URL
-      const redirectUrl = `/register/password?email=${encodeURIComponent(email)}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
-      console.log('Redirecting to:', redirectUrl);
-      
-      // Use replace instead of push to ensure the navigation happens
-      router.replace(redirectUrl);
+      if (data.success && data.redirectPath) {
+        console.log('Redirecting to:', data.redirectPath);
+        router.push(data.redirectPath);
+      } else {
+        throw new Error('Invalid response from server');
+      }
 
     } catch (error) {
       console.error('Error during form submission:', error);

@@ -2,10 +2,17 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { email, firstName, lastName } = await request.json();
+    const body = await request.json();
+    console.log("[REGISTER_STEP1] Received request body:", body);
+
+    const { email, firstName, lastName } = body;
 
     if (!email || !firstName || !lastName) {
-      return new NextResponse("Missing required fields", { status: 400 });
+      console.log("[REGISTER_STEP1] Missing fields:", { email, firstName, lastName });
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
     }
 
     // Construct the base URL using headers to get the correct host and protocol
@@ -27,6 +34,9 @@ export async function POST(request: Request) {
 
   } catch (error) {
     console.error("[REGISTER_STEP1_ERROR]", error);
-    return new NextResponse("Something went wrong", { status: 500 });
+    return NextResponse.json(
+      { error: "Invalid request data" },
+      { status: 400 }
+    );
   }
 } 
