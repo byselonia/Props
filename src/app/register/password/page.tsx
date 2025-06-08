@@ -12,105 +12,114 @@ export const dynamic = 'force-dynamic'; // Disable static rendering
 // }
 
 export default function CreateUsernameAndPasswordPage() {
-  console.log('CreateUsernameAndPasswordPage component rendered');
-
   const router = useRouter();
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    console.log('useEffect: setting isClient to true');
-    setIsClient(true);
-  }, []);
-
-  console.log('isClient state:', isClient);
-
-  const searchParams = isClient ? useSearchParams() : null;
-  console.log('searchParams:', searchParams);
-
-  const email = searchParams?.get("email");
-  const firstName = searchParams?.get("firstName");
-  const lastName = searchParams?.get("lastName");
-
-  console.log('email:', email, 'firstName:', firstName, 'lastName:', lastName);
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [retypePassword, setRetypePassword] = useState("");
+  const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  // Redirect back if essential data is missing (e.g., user directly accessed this page)
-  // This check now runs only on the client after searchParams is available
   useEffect(() => {
-    console.log('useEffect check: isClient', isClient, 'email', email, 'firstName', firstName, 'lastName', lastName);
-    if (isClient && (!email || !firstName || !lastName)) {
-        console.log('Redirecting back to /register due to missing data');
-        router.push("/register");
+    // Get URL parameters
+    const email = searchParams.get("email");
+    const firstName = searchParams.get("firstName");
+    const lastName = searchParams.get("lastName");
+
+    console.log("URL Parameters:", { email, firstName, lastName });
+
+    if (!email || !firstName || !lastName) {
+      console.error("Missing required parameters");
+      router.push("/register");
+      return;
     }
-  }, [isClient, email, firstName, lastName, router]);
+
+    setFormData(prev => ({
+      ...prev,
+      email,
+      firstName,
+      lastName
+    }));
+  }, [searchParams, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null); // Clear previous errors
+    setError(null);
+    setIsLoading(true);
 
-    if (password !== retypePassword) {
-      setError("Passwords do not match.");
+    const { username, password, confirmPassword } = formData;
+
+    // Validate password match
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setIsLoading(false);
       return;
     }
-    
-    setIsLoading(true); // Start loading
+
+    // Validate password strength
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      setIsLoading(false);
+      return;
+    }
 
     try {
-      const response = await fetch("/api/auth/register-complete", {
+      const response = await fetch("/api/register/step2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email,
-          firstName,
-          lastName,
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
           username,
           password,
         }),
       });
 
       if (!response.ok) {
-        const data = await response.text(); // Get plain text error from backend
-        throw new Error(data);
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to create account");
       }
 
       // Redirect to login page on success
-      router.push("/login");
-
+      router.push("/login?registered=true");
     } catch (error) {
+      console.error("Error during form submission:", error);
       if (error instanceof Error) {
         setError(error.message);
       } else {
-        setError("An unexpected error occurred during registration.");
+        setError("An unexpected error occurred");
       }
     } finally {
-      setIsLoading(false); // End loading
+      setIsLoading(false);
     }
   };
 
-  // Don't render form content until client side and data is available
-  if (!isClient || !email || !firstName || !lastName) {
-    console.log('Rendering initial state (null or Loading...)');
-    // We are already handling the redirect in the useEffect above
-    return <div>Loading...</div>; // Show loading state
-  }
-
-  // If we reach here, it's client-side and data is available, so render the form
-  console.log('Rendering form');
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-            Create Username and Password
+            Create your account
           </h2>
+          <p className="mt-2 text-center text-sm text-gray-400">
+            Choose a username and password
+          </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
@@ -123,10 +132,10 @@ export default function CreateUsernameAndPasswordPage() {
                 name="username"
                 type="text"
                 required
+                value={formData.username}
+                onChange={handleChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 rounded-t-md focus:outline-none focus:ring-white focus:border-white focus:z-10 sm:text-sm"
                 placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div>
@@ -138,25 +147,25 @@ export default function CreateUsernameAndPasswordPage() {
                 name="password"
                 type="password"
                 required
+                value={formData.password}
+                onChange={handleChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-white focus:border-white focus:z-10 sm:text-sm"
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div>
-              <label htmlFor="retypePassword" className="sr-only">
-                Re-type Password
+              <label htmlFor="confirmPassword" className="sr-only">
+                Confirm Password
               </label>
               <input
-                id="retypePassword"
-                name="retypePassword"
+                id="confirmPassword"
+                name="confirmPassword"
                 type="password"
                 required
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 rounded-b-md focus:outline-none focus:ring-white focus:border-white focus:z-10 sm:text-sm"
-                placeholder="Re-type Password"
-                value={retypePassword}
-                onChange={(e) => setRetypePassword(e.target.value)}
+                placeholder="Confirm Password"
               />
             </div>
           </div>
@@ -171,7 +180,7 @@ export default function CreateUsernameAndPasswordPage() {
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
               disabled={isLoading}
             >
-              {isLoading ? 'Signing Up...' : 'Sign Up'}
+              {isLoading ? "Creating account..." : "Create account"}
             </button>
           </div>
 
