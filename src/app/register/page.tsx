@@ -11,6 +11,7 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log('Form submission started');
     setError(null); // Clear previous errors
     setIsLoading(true); // Start loading
 
@@ -19,7 +20,10 @@ export default function RegisterPage() {
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
 
+    console.log('Form data:', { email, firstName, lastName });
+
     try {
+      console.log('Making API request to /api/register/step1');
       const response = await fetch("/api/register/step1", {
         method: "POST",
         headers: {
@@ -33,16 +37,24 @@ export default function RegisterPage() {
         redirect: 'manual', // Prevent automatic redirect
       });
 
+      console.log('API response status:', response.status);
+      console.log('API response ok:', response.ok);
+
       if (!response.ok) {
         const data = await response.text(); // Get plain text error from backend
+        console.error('API error:', data);
         throw new Error(data);
       }
 
       // Manually construct the redirect URL
       const redirectUrl = `/register/password?email=${encodeURIComponent(email)}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
-      router.push(redirectUrl);
+      console.log('Redirecting to:', redirectUrl);
+      
+      // Use replace instead of push to ensure the navigation happens
+      router.replace(redirectUrl);
 
     } catch (error) {
+      console.error('Error during form submission:', error);
       if (error instanceof Error) {
         setError(error.message);
       } else {
