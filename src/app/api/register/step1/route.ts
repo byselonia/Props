@@ -36,8 +36,8 @@ export async function POST(request: Request) {
     const redirectPath = `/register/password?email=${encodeURIComponent(email)}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
     console.log("[REGISTER_STEP1] Redirecting to:", redirectPath);
     
-    // Return a 303 redirect response
-    return NextResponse.redirect(redirectPath, { status: 303 });
+    // Return a JSON response with the redirect URL
+    return NextResponse.json({ redirectUrl: redirectPath });
 
   } catch (error) {
     console.error("[REGISTER_STEP1_ERROR]", error);

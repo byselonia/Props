@@ -57,9 +57,17 @@ export default function RegisterPage() {
         throw new Error(errorText || 'Failed to process registration');
       }
 
-      // If we get here, the response was successful
-      // The browser will automatically follow the redirect
-      console.log('Registration successful, following redirect...');
+      // Parse the JSON response
+      const data = await response.json();
+      console.log('API response data:', data);
+
+      // Perform the redirect using the router
+      if (data.redirectUrl) {
+        console.log('Redirecting to:', data.redirectUrl);
+        router.push(data.redirectUrl);
+      } else {
+        throw new Error('No redirect URL received from server');
+      }
 
     } catch (error) {
       console.error('Error during form submission:', error);
