@@ -37,8 +37,15 @@ export default function RegisterPage() {
       });
 
       console.log('API response status:', response.status);
-      const data = await response.json();
-      console.log('API response data:', data);
+      
+      let data;
+      try {
+        data = await response.json();
+        console.log('API response data:', data);
+      } catch (jsonError) {
+        console.error('Error parsing JSON response:', jsonError);
+        throw new Error('Invalid response from server');
+      }
 
       if (!response.ok) {
         throw new Error(data.error || 'Failed to process registration');

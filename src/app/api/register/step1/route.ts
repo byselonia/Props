@@ -15,6 +15,15 @@ export async function POST(request: Request) {
       );
     }
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email format" },
+        { status: 400 }
+      );
+    }
+
     // Construct the base URL using headers to get the correct host and protocol
     const protocol = request.headers.get('x-forwarded-proto') || (request.url.startsWith('https') ? 'https' : 'http');
     const host = request.headers.get('host');
