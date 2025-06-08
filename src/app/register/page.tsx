@@ -37,7 +37,14 @@ export default function RegisterPage() {
         throw new Error(data);
       }
 
-      // The API route handles the redirection
+      // Get the redirect URL from the response
+      const redirectUrl = response.headers.get('location');
+      if (redirectUrl) {
+        // Use the router to navigate to the redirect URL
+        router.push(redirectUrl);
+      } else {
+        throw new Error("No redirect URL received");
+      }
 
     } catch (error) {
       if (error instanceof Error) {
