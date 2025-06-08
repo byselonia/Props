@@ -37,26 +37,15 @@ export default function RegisterPage() {
       });
 
       console.log('API response status:', response.status);
-      
-      let data;
-      try {
-        data = await response.json();
-        console.log('API response data:', data);
-      } catch (jsonError) {
-        console.error('Error parsing JSON response:', jsonError);
-        throw new Error('Invalid response from server');
-      }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to process registration');
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to process registration');
       }
 
-      if (data.success && data.redirectPath) {
-        console.log('Redirecting to:', data.redirectPath);
-        router.push(data.redirectPath);
-      } else {
-        throw new Error('Invalid response from server');
-      }
+      // If we get here, the response was successful
+      // The browser will automatically follow the redirect
+      console.log('Registration successful, following redirect...');
 
     } catch (error) {
       console.error('Error during form submission:', error);
