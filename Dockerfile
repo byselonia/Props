@@ -24,13 +24,21 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Create a new directory for the standalone server
-RUN mkdir -p /app/standalone
+# Create necessary directories
+RUN mkdir -p /app/standalone/.next/static
 
-# Copy necessary files for standalone server
-RUN cp -r .next/standalone/* /app/standalone/ && \
-    cp -r .next/static /app/standalone/.next/static && \
-    cp -r public /app/standalone/
+# Copy standalone server files
+RUN cp -r .next/standalone/* /app/standalone/ || true
+
+# Copy static files if they exist
+RUN if [ -d ".next/static" ]; then \
+    cp -r .next/static/* /app/standalone/.next/static/; \
+    fi
+
+# Copy public files if they exist
+RUN if [ -d "public" ]; then \
+    cp -r public /app/standalone/; \
+    fi
 
 # Set working directory to standalone
 WORKDIR /app/standalone
