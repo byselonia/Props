@@ -4,13 +4,21 @@ import { useState, useEffect } from "react";
 import { CameraIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
-  const { data: session } = useSession();
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [showBalanceOptions, setShowBalanceOptions] = useState(false);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
 
   useEffect(() => {
     if (session?.user) {
@@ -41,6 +49,14 @@ export default function ProfilePage() {
     console.log(`Adding $${amount}`);
     setShowBalanceOptions(false);
   };
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-xl">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white p-4">
