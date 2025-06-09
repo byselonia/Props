@@ -159,6 +159,26 @@ export default function SocialPage() {
       <div className="flex-1 overflow-y-auto">
         {activeTab === 'friends' && (
           <div className="p-4 space-y-4">
+            {/* Action Buttons */}
+            <div className="flex gap-2 mb-4">
+              <button className="flex-1 flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
+                <UserPlusIcon className="w-5 h-5" />
+                Add Friend
+              </button>
+              <button className="flex-1 flex items-center justify-center gap-2 bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700">
+                <PlusIcon className="w-5 h-5" />
+                Invite Friends
+              </button>
+            </div>
+
+            {/* Action Button */}
+            <div className="mb-4">
+              <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
+                <UserGroupIcon className="w-5 h-5" />
+                Create Group
+              </button>
+            </div>
+
             {friends.map((friend) => (
               <button
                 key={friend.id}
@@ -180,6 +200,14 @@ export default function SocialPage() {
 
         {activeTab === 'groups' && (
           <div className="p-4 space-y-4">
+            {/* Action Button */}
+            <div className="mb-4">
+              <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
+                <UserGroupIcon className="w-5 h-5" />
+                Create Group
+              </button>
+            </div>
+
             {groups.map((group) => (
               <button
                 key={group.id}
