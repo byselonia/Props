@@ -99,34 +99,10 @@ export default function ProfilePage() {
             <p className="text-sm text-gray-400">Click the camera icon to upload a photo</p>
           </div>
 
-          {/* First Name Field */}
-          <div>
-            <label htmlFor="firstName" className="block text-sm font-medium text-gray-400 mb-2">
-              First Name
-            </label>
-            <input
-              type="text"
-              id="firstName"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
-              placeholder="Enter your first name"
-            />
-          </div>
-
-          {/* Username Field */}
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-400 mb-2">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
-              placeholder="Enter your username"
-            />
+          {/* Name and Username Display */}
+          <div className="text-center space-y-1">
+            <h2 className="text-3xl font-bold">{firstName}</h2>
+            <p className="text-gray-400">@{username}</p>
           </div>
 
           {/* Balance Section */}
