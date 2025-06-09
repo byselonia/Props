@@ -20,14 +20,17 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid credentials");
         }
 
-        const user = await prisma.user.findFirst({
-          where: {
-            OR: [
-              { email: credentials.login },
-              { username: credentials.login }
-            ]
-          }
+        // First try to find user by email
+        let user = await prisma.user.findUnique({
+          where: { email: credentials.login }
         });
+
+        // If not found by email, try username
+        if (!user) {
+          user = await prisma.user.findUnique({
+            where: { username: credentials.login }
+          });
+        }
 
         if (!user || !user?.password) {
           throw new Error("Invalid credentials");
