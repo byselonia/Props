@@ -66,7 +66,7 @@ export default function ChatPage({ params }: ChatProps) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gray-900 text-white">
+    <div className="flex flex-col h-screen bg-gray-900 text-white">
       {/* Header */}
       <div className="p-4 border-b border-gray-800 flex items-center gap-4">
         <button
@@ -107,8 +107,8 @@ export default function ChatPage({ params }: ChatProps) {
         ))}
       </div>
 
-      {/* Message Input */}
-      <div className="p-4 border-t border-gray-800">
+      {/* Message Input - Sticky at bottom */}
+      <div className="sticky bottom-0 p-4 border-t border-gray-800 bg-gray-900">
         <div className="flex gap-2">
           <input
             type="text"
