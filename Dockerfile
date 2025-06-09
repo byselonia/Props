@@ -27,5 +27,5 @@ RUN npm run build
 # Expose the port
 EXPOSE 8080
 
-# Start the application
-CMD ["npm", "start"]
+# Start the application using the standalone server
+CMD ["node", ".next/standalone/server.js"]
