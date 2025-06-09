@@ -67,8 +67,8 @@ export default function ChatPage({ params }: ChatProps) {
 
   return (
     <div className="flex flex-col h-screen bg-gray-900 text-white">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-800 flex items-center gap-4">
+      {/* Header - Fixed at top */}
+      <div className="fixed top-0 left-0 right-0 p-4 border-b border-gray-800 flex items-center gap-4 bg-gray-900 z-10">
         <button
           onClick={() => router.back()}
           className="p-2 hover:bg-gray-800 rounded-lg"
@@ -83,8 +83,8 @@ export default function ChatPage({ params }: ChatProps) {
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      {/* Messages - With padding for fixed header and input */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 mt-[72px] mb-[72px]">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -107,8 +107,8 @@ export default function ChatPage({ params }: ChatProps) {
         ))}
       </div>
 
-      {/* Message Input - Sticky at bottom */}
-      <div className="sticky bottom-0 p-4 border-t border-gray-800 bg-gray-900">
+      {/* Message Input - Fixed at bottom */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 border-t border-gray-800 bg-gray-900 z-10">
         <div className="flex gap-2">
           <input
             type="text"
