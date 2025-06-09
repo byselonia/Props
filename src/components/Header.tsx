@@ -12,10 +12,13 @@ export default function Header() {
   }
 
   const getSearchPlaceholder = () => {
-    if (pathname === "/home") return "Search Props";
-    if (pathname === "/market") return "Search Market";
-    if (pathname.startsWith("/create")) return "Search Teams, Games, Players";
-    if (pathname === "/social") return "Search Social";
+    // Remove any trailing slashes for consistent matching
+    const cleanPath = pathname.replace(/\/$/, '');
+    
+    if (cleanPath === "/home") return "Search Props";
+    if (cleanPath === "/market") return "Search Market";
+    if (cleanPath.startsWith("/create")) return "Search Teams, Games, Players";
+    if (cleanPath === "/social") return "Search Social";
     return "Search...";
   };
 
