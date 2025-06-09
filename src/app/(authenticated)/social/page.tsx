@@ -55,7 +55,7 @@ export default function SocialPage() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gray-900 text-white">
+    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
       {/* Main Navigation Tabs */}
       <div className="flex border-b border-gray-800">
         <button
@@ -85,9 +85,9 @@ export default function SocialPage() {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-y-auto">
         {activeTab === 'friends' && (
-          <div className="h-full">
+          <div className="min-h-full">
             {/* Action Buttons - Centered and Full Width */}
             <div className="p-4 border-b border-gray-800">
               <div className="max-w-2xl mx-auto space-y-2">
@@ -133,7 +133,7 @@ export default function SocialPage() {
         )}
 
         {activeTab === 'groups' && (
-          <div className="h-full">
+          <div className="min-h-full">
             {/* Action Button - Centered and Full Width */}
             <div className="p-4 border-b border-gray-800">
               <div className="max-w-2xl mx-auto">
