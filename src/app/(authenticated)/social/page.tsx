@@ -1,136 +1,58 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { PlusIcon, UserPlusIcon, ChatBubbleLeftRightIcon, UserGroupIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useState } from 'react';
+import { UserPlusIcon, PlusIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+
+type Friend = {
+  id: number;
+  name: string;
+  status: 'online' | 'offline';
+  lastActive: string;
+};
+
+type Group = {
+  id: number;
+  name: string;
+  members: number;
+  lastMessage: string;
+  time: string;
+};
 
 export default function SocialPage() {
-  const [activeTab, setActiveTab] = useState<'friends' | 'groups' | 'chats'>('friends');
-  const [selectedFriend, setSelectedFriend] = useState<{ id: number; name: string } | null>(null);
-  const [selectedGroup, setSelectedGroup] = useState<{ id: number; name: string; members: number } | null>(null);
+  const [activeTab, setActiveTab] = useState<'friends' | 'groups'>('friends');
+  const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
+  const [message, setMessage] = useState('');
 
-  // Mock data - will be replaced with real data later
-  const friends = [
-    { id: 1, name: "John Doe", status: "online", lastSeen: "2m ago" },
-    { id: 2, name: "Jane Smith", status: "offline", lastSeen: "1h ago" },
-    { id: 3, name: "Mike Johnson", status: "online", lastSeen: "5m ago" },
+  const friends: Friend[] = [
+    { id: 1, name: "Mike Johnson", status: "online", lastActive: "2m ago" },
+    { id: 2, name: "Sarah Smith", status: "offline", lastActive: "1h ago" },
+    { id: 3, name: "John Davis", status: "online", lastActive: "5m ago" },
   ];
 
-  const groups = [
+  const groups: Group[] = [
     { id: 1, name: "Gaming Squad", members: 5, lastMessage: "Mike: Anyone up for a game?", time: "1h ago" },
     { id: 2, name: "Fantasy League", members: 8, lastMessage: "John: Who's winning this week?", time: "2h ago" },
     { id: 3, name: "Betting Group", members: 4, lastMessage: "Jane: New bet posted!", time: "30m ago" },
   ];
 
-  const groupChats = [
-    { id: 1, name: "Gaming Squad", members: 5, lastMessage: "Mike: Anyone up for a game?", time: "1h ago" },
-    { id: 2, name: "Fantasy League", members: 8, lastMessage: "John: Who's winning this week?", time: "2h ago" },
-    { id: 3, name: "Betting Group", members: 4, lastMessage: "Jane: New bet posted!", time: "30m ago" },
-  ];
-
-  const handleFriendSelect = (friend: { id: number; name: string }) => {
-    setSelectedFriend(friend);
-    setSelectedGroup(null);
+  const handleSendMessage = () => {
+    if (message.trim() && (selectedFriend || selectedGroup)) {
+      // Handle sending message
+      setMessage('');
+    }
   };
-
-  const handleGroupSelect = (group: { id: number; name: string; members: number }) => {
-    setSelectedGroup(group);
-    setSelectedFriend(null);
-  };
-
-  const handleBack = () => {
-    setSelectedFriend(null);
-    setSelectedGroup(null);
-  };
-
-  if (selectedFriend) {
-    return (
-      <div className="h-screen flex flex-col bg-gray-900">
-        {/* Chat Header */}
-        <div className="p-4 border-b border-gray-800 flex items-center">
-          <button
-            onClick={handleBack}
-            className="mr-4 p-2 hover:bg-gray-800 rounded-full"
-          >
-            <ArrowLeftIcon className="w-6 h-6 text-white" />
-          </button>
-          <h2 className="text-xl font-semibold text-white flex-1 text-center">
-            {selectedFriend.name}
-          </h2>
-        </div>
-
-        {/* Messages Area */}
-        <div className="flex-1 p-4 overflow-y-auto">
-          <div className="space-y-4">
-            {/* Placeholder for messages */}
-            <p className="text-gray-400 text-center">No messages yet</p>
-          </div>
-        </div>
-
-        {/* Message Input */}
-        <div className="p-4 border-t border-gray-800">
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Type a message..."
-              className="flex-1 bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-white"
-            />
-            <button className="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200">
-              Send
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (selectedGroup) {
-    return (
-      <div className="h-screen flex flex-col bg-gray-900">
-        {/* Chat Header */}
-        <div className="p-4 border-b border-gray-800 flex items-center">
-          <button
-            onClick={handleBack}
-            className="mr-4 p-2 hover:bg-gray-800 rounded-full"
-          >
-            <ArrowLeftIcon className="w-6 h-6 text-white" />
-          </button>
-          <div className="flex-1 text-center">
-            <h2 className="text-xl font-semibold text-white">{selectedGroup.name}</h2>
-            <p className="text-sm text-gray-400">{selectedGroup.members} members</p>
-          </div>
-        </div>
-
-        {/* Messages Area */}
-        <div className="flex-1 p-4 overflow-y-auto">
-          <div className="space-y-4">
-            {/* Placeholder for messages */}
-            <p className="text-gray-400 text-center">No messages yet</p>
-          </div>
-        </div>
-
-        {/* Message Input */}
-        <div className="p-4 border-t border-gray-800">
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Type a message..."
-              className="flex-1 bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-white"
-            />
-            <button className="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200">
-              Send
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="h-screen flex flex-col bg-gray-900">
-      {/* Tabs */}
+    <div className="flex flex-col h-full bg-gray-900 text-white">
+      {/* Main Navigation Tabs */}
       <div className="flex border-b border-gray-800">
         <button
-          onClick={() => setActiveTab('friends')}
+          onClick={() => {
+            setActiveTab('friends');
+            setSelectedFriend(null);
+            setSelectedGroup(null);
+          }}
           className={`flex-1 py-4 px-4 text-center ${
             activeTab === 'friends' ? 'text-white border-b-2 border-white' : 'text-gray-400'
           }`}
@@ -138,119 +60,176 @@ export default function SocialPage() {
           Friends
         </button>
         <button
-          onClick={() => setActiveTab('groups')}
+          onClick={() => {
+            setActiveTab('groups');
+            setSelectedFriend(null);
+            setSelectedGroup(null);
+          }}
           className={`flex-1 py-4 px-4 text-center ${
             activeTab === 'groups' ? 'text-white border-b-2 border-white' : 'text-gray-400'
           }`}
         >
           Groups
         </button>
-        <button
-          onClick={() => setActiveTab('chats')}
-          className={`flex-1 py-4 px-4 text-center ${
-            activeTab === 'chats' ? 'text-white border-b-2 border-white' : 'text-gray-400'
-          }`}
-        >
-          Chats
-        </button>
       </div>
 
-      {/* Content based on active tab */}
-      <div className="flex-1 overflow-y-auto">
+      {/* Main Content Area */}
+      <div className="flex-1 overflow-hidden">
         {activeTab === 'friends' && (
-          <div className="p-4 space-y-4">
-            {/* Action Buttons */}
-            <div className="flex gap-2 mb-4">
-              <button className="flex-1 flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
-                <UserPlusIcon className="w-5 h-5" />
-                Add Friend
-              </button>
-              <button className="flex-1 flex items-center justify-center gap-2 bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700">
-                <PlusIcon className="w-5 h-5" />
-                Invite Friends
-              </button>
+          <div className="h-full flex">
+            {/* Friends Sidebar */}
+            <div className="w-1/3 border-r border-gray-800 p-4">
+              {/* Action Buttons */}
+              <div className="flex gap-2 mb-4">
+                <button className="flex-1 flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
+                  <UserPlusIcon className="w-5 h-5" />
+                  Add Friend
+                </button>
+                <button className="flex-1 flex items-center justify-center gap-2 bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700">
+                  <PlusIcon className="w-5 h-5" />
+                  Invite Friends
+                </button>
+              </div>
+
+              {/* Friends List */}
+              <div className="space-y-2">
+                {friends.map((friend) => (
+                  <button
+                    key={friend.id}
+                    onClick={() => setSelectedFriend(friend)}
+                    className={`w-full p-3 rounded-lg flex items-center gap-3 ${
+                      selectedFriend?.id === friend.id ? 'bg-gray-800' : 'hover:bg-gray-800'
+                    }`}
+                  >
+                    <div className="relative">
+                      <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                        {friend.name.charAt(0)}
+                      </div>
+                      <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-gray-900 ${
+                        friend.status === 'online' ? 'bg-green-500' : 'bg-gray-500'
+                      }`} />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <div className="font-medium">{friend.name}</div>
+                      <div className="text-sm text-gray-400">{friend.lastActive}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Action Button */}
-            <div className="mb-4">
-              <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
-                <UserGroupIcon className="w-5 h-5" />
-                Create Group
-              </button>
-            </div>
-
-            {friends.map((friend) => (
-              <button
-                key={friend.id}
-                onClick={() => handleFriendSelect(friend)}
-                className="w-full flex items-center justify-between p-4 bg-gray-800 rounded-lg hover:bg-gray-700"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
-                  <div>
-                    <p className="text-white font-medium">{friend.name}</p>
-                    <p className="text-sm text-gray-400">{friend.status}</p>
+            {/* Chat Area */}
+            <div className="flex-1 flex flex-col">
+              {selectedFriend ? (
+                <>
+                  <div className="p-4 border-b border-gray-800">
+                    <h2 className="text-xl font-semibold">{selectedFriend.name}</h2>
                   </div>
+                  <div className="flex-1 p-4 overflow-y-auto">
+                    {/* Chat messages would go here */}
+                  </div>
+                  <div className="p-4 border-t border-gray-800">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Type a message..."
+                        className="flex-1 bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-white"
+                      />
+                      <button
+                        onClick={handleSendMessage}
+                        className="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200"
+                      >
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="flex-1 flex items-center justify-center text-gray-400">
+                  Select a friend to start chatting
                 </div>
-                <p className="text-sm text-gray-400">{friend.lastSeen}</p>
-              </button>
-            ))}
+              )}
+            </div>
           </div>
         )}
 
         {activeTab === 'groups' && (
-          <div className="p-4 space-y-4">
-            {/* Action Button */}
-            <div className="mb-4">
-              <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
-                <UserGroupIcon className="w-5 h-5" />
-                Create Group
-              </button>
+          <div className="h-full flex">
+            {/* Groups Sidebar */}
+            <div className="w-1/3 border-r border-gray-800 p-4">
+              {/* Action Button */}
+              <div className="mb-4">
+                <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
+                  <UserGroupIcon className="w-5 h-5" />
+                  Create Group
+                </button>
+              </div>
+
+              {/* Groups List */}
+              <div className="space-y-2">
+                {groups.map((group) => (
+                  <button
+                    key={group.id}
+                    onClick={() => setSelectedGroup(group)}
+                    className={`w-full p-3 rounded-lg ${
+                      selectedGroup?.id === group.id ? 'bg-gray-800' : 'hover:bg-gray-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                        {group.name.charAt(0)}
+                      </div>
+                      <div className="flex-1 text-left">
+                        <div className="font-medium">{group.name}</div>
+                        <div className="text-sm text-gray-400">{group.members} members</div>
+                      </div>
+                    </div>
+                    <div className="mt-2 text-sm text-gray-400">
+                      <div>{group.lastMessage}</div>
+                      <div>{group.time}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {groups.map((group) => (
-              <button
-                key={group.id}
-                onClick={() => handleGroupSelect(group)}
-                className="w-full flex items-center justify-between p-4 bg-gray-800 rounded-lg hover:bg-gray-700"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
-                  <div>
-                    <p className="text-white font-medium">{group.name}</p>
-                    <p className="text-sm text-gray-400">{group.members} members</p>
+            {/* Group Chat Area */}
+            <div className="flex-1 flex flex-col">
+              {selectedGroup ? (
+                <>
+                  <div className="p-4 border-b border-gray-800">
+                    <h2 className="text-xl font-semibold">{selectedGroup.name}</h2>
+                    <p className="text-sm text-gray-400">{selectedGroup.members} members</p>
                   </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-gray-400">{group.lastMessage}</p>
-                  <p className="text-xs text-gray-500">{group.time}</p>
-                </div>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {activeTab === 'chats' && (
-          <div className="p-4 space-y-4">
-            {groupChats.map((chat) => (
-              <button
-                key={chat.id}
-                onClick={() => handleGroupSelect(chat)}
-                className="w-full flex items-center justify-between p-4 bg-gray-800 rounded-lg hover:bg-gray-700"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
-                  <div>
-                    <p className="text-white font-medium">{chat.name}</p>
-                    <p className="text-sm text-gray-400">{chat.members} members</p>
+                  <div className="flex-1 p-4 overflow-y-auto">
+                    {/* Group chat messages would go here */}
                   </div>
+                  <div className="p-4 border-t border-gray-800">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Type a message..."
+                        className="flex-1 bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-white"
+                      />
+                      <button
+                        onClick={handleSendMessage}
+                        className="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200"
+                      >
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="flex-1 flex items-center justify-center text-gray-400">
+                  Select a group to view messages
                 </div>
-                <div className="text-right">
-                  <p className="text-sm text-gray-400">{chat.lastMessage}</p>
-                  <p className="text-xs text-gray-500">{chat.time}</p>
-                </div>
-              </button>
-            ))}
+              )}
+            </div>
           </div>
         )}
       </div>
