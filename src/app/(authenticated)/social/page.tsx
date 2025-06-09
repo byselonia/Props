@@ -100,33 +100,34 @@ export default function SocialPage() {
       {/* Main Content Area */}
       <div className="flex-1 overflow-hidden">
         {activeTab === 'friends' && (
-          <div className="h-full flex">
-            {/* Friends Sidebar */}
-            <div className="w-1/3 border-r border-gray-800 p-4">
-              {/* Action Buttons */}
-              <div className="flex gap-2 mb-4">
-                <button className="flex-1 flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
+          <div className="h-full">
+            {/* Action Buttons - Centered and Full Width */}
+            <div className="p-4 border-b border-gray-800">
+              <div className="max-w-2xl mx-auto space-y-2">
+                <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-3 px-4 rounded-lg hover:bg-gray-200">
                   <UserPlusIcon className="w-5 h-5" />
                   Add Friend
                 </button>
-                <button className="flex-1 flex items-center justify-center gap-2 bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700">
+                <button className="w-full flex items-center justify-center gap-2 bg-gray-800 text-white py-3 px-4 rounded-lg hover:bg-gray-700">
                   <PlusIcon className="w-5 h-5" />
                   Invite Friends
                 </button>
               </div>
+            </div>
 
-              {/* Friends List */}
-              <div className="space-y-2">
+            {/* Friends List - Full Width */}
+            <div className="p-4">
+              <div className="max-w-2xl mx-auto space-y-2">
                 {friends.map((friend) => (
                   <button
                     key={friend.id}
                     onClick={() => setSelectedFriend(friend)}
-                    className={`w-full p-3 rounded-lg flex items-center gap-3 ${
+                    className={`w-full p-4 rounded-lg flex items-center gap-3 ${
                       selectedFriend?.id === friend.id ? 'bg-gray-800' : 'hover:bg-gray-800'
                     }`}
                   >
                     <div className="relative">
-                      <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-lg">
                         {friend.name.charAt(0)}
                       </div>
                       <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-gray-900 ${
@@ -134,79 +135,45 @@ export default function SocialPage() {
                       }`} />
                     </div>
                     <div className="flex-1 text-left">
-                      <div className="font-medium">{friend.name}</div>
+                      <div className="font-medium text-lg">{friend.name}</div>
                       <div className="text-sm text-gray-400">{friend.lastActive}</div>
                     </div>
                   </button>
                 ))}
               </div>
             </div>
-
-            {/* Chat Area */}
-            <div className="flex-1 flex flex-col">
-              {selectedFriend ? (
-                <>
-                  <div className="p-4 border-b border-gray-800">
-                    <h2 className="text-xl font-semibold">{selectedFriend.name}</h2>
-                  </div>
-                  <div className="flex-1 p-4 overflow-y-auto">
-                    {/* Chat messages would go here */}
-                  </div>
-                  <div className="p-4 border-t border-gray-800">
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Type a message..."
-                        className="flex-1 bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-white"
-                      />
-                      <button
-                        onClick={handleSendMessage}
-                        className="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200"
-                      >
-                        Send
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <div className="flex-1 flex items-center justify-center text-gray-400">
-                  Select a friend to start chatting
-                </div>
-              )}
-            </div>
           </div>
         )}
 
         {activeTab === 'groups' && (
-          <div className="h-full flex">
-            {/* Groups Sidebar */}
-            <div className="w-1/3 border-r border-gray-800 p-4">
-              {/* Action Button */}
-              <div className="mb-4">
-                <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
+          <div className="h-full">
+            {/* Action Button - Centered and Full Width */}
+            <div className="p-4 border-b border-gray-800">
+              <div className="max-w-2xl mx-auto">
+                <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-3 px-4 rounded-lg hover:bg-gray-200">
                   <UserGroupIcon className="w-5 h-5" />
                   Create Group
                 </button>
               </div>
+            </div>
 
-              {/* Groups List */}
-              <div className="space-y-2">
+            {/* Groups List - Full Width */}
+            <div className="p-4">
+              <div className="max-w-2xl mx-auto space-y-2">
                 {groups.map((group) => (
                   <button
                     key={group.id}
                     onClick={() => setSelectedGroup(group)}
-                    className={`w-full p-3 rounded-lg ${
+                    className={`w-full p-4 rounded-lg ${
                       selectedGroup?.id === group.id ? 'bg-gray-800' : 'hover:bg-gray-800'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-lg">
                         {group.name.charAt(0)}
                       </div>
                       <div className="flex-1 text-left">
-                        <div className="font-medium">{group.name}</div>
+                        <div className="font-medium text-lg">{group.name}</div>
                         <div className="text-sm text-gray-400">{group.members} members</div>
                       </div>
                     </div>
@@ -218,45 +185,9 @@ export default function SocialPage() {
                 ))}
               </div>
             </div>
-
-            {/* Group Chat Area */}
-            <div className="flex-1 flex flex-col">
-              {selectedGroup ? (
-                <>
-                  <div className="p-4 border-b border-gray-800">
-                    <h2 className="text-xl font-semibold">{selectedGroup.name}</h2>
-                    <p className="text-sm text-gray-400">{selectedGroup.members} members</p>
-                  </div>
-                  <div className="flex-1 p-4 overflow-y-auto">
-                    {/* Group chat messages would go here */}
-                  </div>
-                  <div className="p-4 border-t border-gray-800">
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Type a message..."
-                        className="flex-1 bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-white"
-                      />
-                      <button
-                        onClick={handleSendMessage}
-                        className="bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200"
-                      >
-                        Send
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <div className="flex-1 flex items-center justify-center text-gray-400">
-                  Select a group to view messages
-                </div>
-              )}
-            </div>
           </div>
         )}
       </div>
     </div>
   );
-} 
+}
