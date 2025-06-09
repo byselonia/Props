@@ -1,48 +1,60 @@
-FROM node:18-slim
+FROM node:18-slim AS base
 
 # Install OpenSSL
 RUN apt-get update -y && \
     apt-get install -y openssl && \
     rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Install dependencies only when needed
+FROM base AS deps
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-COPY prisma ./prisma/
-
-# Install dependencies
+# Install dependencies based on the preferred package manager
+COPY package.json package-lock.json* ./
 RUN npm install
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
 # Generate Prisma Client
 RUN npx prisma generate
 
-# Copy the rest of the application
-COPY . .
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+ENV NEXT_TELEMETRY_DISABLED 1
 
-# Build the application
 RUN npm run build
 
-# Create necessary directories
-RUN mkdir -p /app/standalone/.next
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
 
-# Copy the entire .next directory
-RUN cp -r .next/* /app/standalone/.next/
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
 
-# Copy standalone server files
-RUN cp -r .next/standalone/* /app/standalone/
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Copy public files if they exist
-RUN if [ -d "public" ]; then \
-    cp -r public /app/standalone/; \
-    fi
+COPY --from=builder /app/public ./public
 
-# Set working directory to standalone
-WORKDIR /app/standalone
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
-# Expose the port
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
 EXPOSE 8080
 
-# Start the application
+ENV PORT 8080
+ENV HOSTNAME "0.0.0.0"
+
 CMD ["node", "server.js"]
