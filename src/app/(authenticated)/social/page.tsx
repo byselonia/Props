@@ -164,22 +164,18 @@ export default function SocialPage() {
                   <button
                     key={group.id}
                     onClick={() => setSelectedGroup(group)}
-                    className={`w-full p-4 rounded-lg ${
+                    className={`w-full p-4 rounded-lg flex items-center gap-3 ${
                       selectedGroup?.id === group.id ? 'bg-gray-800' : 'hover:bg-gray-800'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="relative">
                       <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-lg">
                         {group.name.charAt(0)}
                       </div>
-                      <div className="flex-1 text-left">
-                        <div className="font-medium text-lg">{group.name}</div>
-                        <div className="text-sm text-gray-400">{group.members} members</div>
-                      </div>
                     </div>
-                    <div className="mt-2 text-sm text-gray-400">
-                      <div>{group.lastMessage}</div>
-                      <div>{group.time}</div>
+                    <div className="flex-1 text-left">
+                      <div className="font-medium text-lg">{group.name}</div>
+                      <div className="text-sm text-gray-400">{group.members} members</div>
                     </div>
                   </button>
                 ))}
