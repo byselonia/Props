@@ -1,14 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CameraIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 export default function ProfilePage() {
+  const { data: session } = useSession();
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [showBalanceOptions, setShowBalanceOptions] = useState(false);
+
+  useEffect(() => {
+    if (session?.user) {
+      setUsername(session.user.username || "");
+      setFirstName(session.user.firstName || "");
+    }
+  }, [session]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -34,41 +43,9 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-4 pt-8">
+    <div className="min-h-screen bg-black text-white p-4">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold mb-8">Profile</h1>
-
-        {/* Balance Button */}
-        <div className="mb-8">
-          <button
-            onClick={() => setShowBalanceOptions(!showBalanceOptions)}
-            className="w-full bg-gray-800 hover:bg-gray-700 text-white py-4 rounded-lg font-medium flex items-center justify-between px-6 transition-colors"
-          >
-            <span>Your Balance</span>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">$1000</span>
-              <PlusIcon className="w-5 h-5" />
-            </div>
-          </button>
-
-          {/* Balance Options */}
-          {showBalanceOptions && (
-            <div className="mt-2 bg-gray-800 rounded-lg p-4">
-              <h3 className="text-lg font-medium mb-4">Add Money</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {[10, 25, 50, 100].map((amount) => (
-                  <button
-                    key={amount}
-                    onClick={() => handleAddMoney(amount)}
-                    className="bg-white text-black py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
-                  >
-                    +${amount}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Profile Photo Section */}
@@ -106,21 +83,6 @@ export default function ProfilePage() {
             <p className="text-sm text-gray-400">Click the camera icon to upload a photo</p>
           </div>
 
-          {/* Username Field */}
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-400 mb-2">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
-              placeholder="Enter your username"
-            />
-          </div>
-
           {/* First Name Field */}
           <div>
             <label htmlFor="firstName" className="block text-sm font-medium text-gray-400 mb-2">
@@ -136,10 +98,67 @@ export default function ProfilePage() {
             />
           </div>
 
+          {/* Username Field */}
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-400 mb-2">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+              placeholder="Enter your username"
+            />
+          </div>
+
+          {/* Balance Section */}
+          <div className="bg-gray-800 p-4 rounded-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">Balance</h2>
+              <button
+                onClick={() => setShowBalanceOptions(!showBalanceOptions)}
+                className="text-sm text-gray-400 hover:text-white"
+              >
+                Add Money
+              </button>
+            </div>
+            <p className="text-2xl font-bold">$0.00</p>
+            {showBalanceOptions && (
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => handleAddMoney(10)}
+                  className="bg-white text-black py-2 rounded hover:bg-gray-200"
+                >
+                  Add $10
+                </button>
+                <button
+                  onClick={() => handleAddMoney(20)}
+                  className="bg-white text-black py-2 rounded hover:bg-gray-200"
+                >
+                  Add $20
+                </button>
+                <button
+                  onClick={() => handleAddMoney(50)}
+                  className="bg-white text-black py-2 rounded hover:bg-gray-200"
+                >
+                  Add $50
+                </button>
+                <button
+                  onClick={() => handleAddMoney(100)}
+                  className="bg-white text-black py-2 rounded hover:bg-gray-200"
+                >
+                  Add $100
+                </button>
+              </div>
+            )}
+          </div>
+
           {/* Save Button */}
           <button
             type="submit"
-            className="w-full bg-white text-black py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+            className="w-full bg-white text-black py-2 rounded-lg hover:bg-gray-200"
           >
             Save Changes
           </button>
