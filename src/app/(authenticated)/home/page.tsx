@@ -40,24 +40,11 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Recent Activity Section */}
+        {/* Trending Section */}
         <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-3">Recent Activity</h2>
+          <h2 className="text-xl font-semibold mb-3">Trending</h2>
           <div className="bg-gray-800 rounded-lg p-4">
             <p className="text-gray-400">No recent activity</p>
-          </div>
-        </section>
-
-        {/* Quick Actions */}
-        <section>
-          <h2 className="text-xl font-semibold mb-3">Quick Actions</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <button className="bg-white text-black rounded-lg p-4 font-medium hover:bg-gray-200">
-              Create New Bet
-            </button>
-            <button className="bg-white text-black rounded-lg p-4 font-medium hover:bg-gray-200">
-              Browse Market
-            </button>
           </div>
         </section>
       </div>
