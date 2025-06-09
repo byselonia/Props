@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PlusIcon, UserPlusIcon, ChatBubbleLeftRightIcon, UserGroupIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export default function SocialPage() {
-  const [activeTab, setActiveTab] = useState<'friends' | 'chats'>('friends');
+  const [activeTab, setActiveTab] = useState<'friends' | 'groups' | 'chats'>('friends');
   const [selectedFriend, setSelectedFriend] = useState<{ id: number; name: string } | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<{ id: number; name: string; members: number } | null>(null);
 
@@ -13,6 +13,12 @@ export default function SocialPage() {
     { id: 1, name: "John Doe", status: "online", lastSeen: "2m ago" },
     { id: 2, name: "Jane Smith", status: "offline", lastSeen: "1h ago" },
     { id: 3, name: "Mike Johnson", status: "online", lastSeen: "5m ago" },
+  ];
+
+  const groups = [
+    { id: 1, name: "Gaming Squad", members: 5, lastMessage: "Mike: Anyone up for a game?", time: "1h ago" },
+    { id: 2, name: "Fantasy League", members: 8, lastMessage: "John: Who's winning this week?", time: "2h ago" },
+    { id: 3, name: "Betting Group", members: 4, lastMessage: "Jane: New bet posted!", time: "30m ago" },
   ];
 
   const groupChats = [
@@ -132,75 +138,91 @@ export default function SocialPage() {
           Friends
         </button>
         <button
+          onClick={() => setActiveTab('groups')}
+          className={`flex-1 py-4 px-4 text-center ${
+            activeTab === 'groups' ? 'text-white border-b-2 border-white' : 'text-gray-400'
+          }`}
+        >
+          Groups
+        </button>
+        <button
           onClick={() => setActiveTab('chats')}
           className={`flex-1 py-4 px-4 text-center ${
             activeTab === 'chats' ? 'text-white border-b-2 border-white' : 'text-gray-400'
           }`}
         >
-          Group Chats
+          Chats
         </button>
       </div>
 
       {/* Content based on active tab */}
       <div className="flex-1 overflow-y-auto">
-        {activeTab === 'friends' ? (
-          <div className="p-4">
-            {/* Add Friend Button */}
-            <button className="w-full mb-4 flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
-              <UserPlusIcon className="w-5 h-5" />
-              Add Friend
-            </button>
-
-            {/* Invite Friends Button */}
-            <button className="w-full mb-4 flex items-center justify-center gap-2 bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700">
-              <PlusIcon className="w-5 h-5" />
-              Invite Friends
-            </button>
-
-            {/* Friends List */}
-            <div className="space-y-2">
-              {friends.map((friend) => (
-                <div
-                  key={friend.id}
-                  onClick={() => handleFriendSelect(friend)}
-                  className="flex items-center justify-between p-3 bg-gray-800 rounded-lg hover:bg-gray-700 cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-2 h-2 rounded-full ${friend.status === 'online' ? 'bg-green-500' : 'bg-gray-500'}`} />
-                    <span className="text-white">{friend.name}</span>
+        {activeTab === 'friends' && (
+          <div className="p-4 space-y-4">
+            {friends.map((friend) => (
+              <button
+                key={friend.id}
+                onClick={() => handleFriendSelect(friend)}
+                className="w-full flex items-center justify-between p-4 bg-gray-800 rounded-lg hover:bg-gray-700"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
+                  <div>
+                    <p className="text-white font-medium">{friend.name}</p>
+                    <p className="text-sm text-gray-400">{friend.status}</p>
                   </div>
-                  <span className="text-gray-400 text-sm">{friend.lastSeen}</span>
                 </div>
-              ))}
-            </div>
+                <p className="text-sm text-gray-400">{friend.lastSeen}</p>
+              </button>
+            ))}
           </div>
-        ) : (
-          <div className="p-4">
-            {/* New Group Chat Button */}
-            <button className="w-full mb-4 flex items-center justify-center gap-2 bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200">
-              <UserGroupIcon className="w-5 h-5" />
-              Create Group Chat
-            </button>
+        )}
 
-            {/* Group Chats List */}
-            <div className="space-y-2">
-              {groupChats.map((group) => (
-                <div
-                  key={group.id}
-                  onClick={() => handleGroupSelect(group)}
-                  className="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 cursor-pointer"
-                >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <span className="text-white font-medium">{group.name}</span>
-                      <p className="text-gray-400 text-sm">{group.members} members</p>
-                    </div>
-                    <span className="text-gray-400 text-sm">{group.time}</span>
+        {activeTab === 'groups' && (
+          <div className="p-4 space-y-4">
+            {groups.map((group) => (
+              <button
+                key={group.id}
+                onClick={() => handleGroupSelect(group)}
+                className="w-full flex items-center justify-between p-4 bg-gray-800 rounded-lg hover:bg-gray-700"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
+                  <div>
+                    <p className="text-white font-medium">{group.name}</p>
+                    <p className="text-sm text-gray-400">{group.members} members</p>
                   </div>
-                  <p className="text-gray-400 text-sm truncate mt-1">{group.lastMessage}</p>
                 </div>
-              ))}
-            </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-400">{group.lastMessage}</p>
+                  <p className="text-xs text-gray-500">{group.time}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'chats' && (
+          <div className="p-4 space-y-4">
+            {groupChats.map((chat) => (
+              <button
+                key={chat.id}
+                onClick={() => handleGroupSelect(chat)}
+                className="w-full flex items-center justify-between p-4 bg-gray-800 rounded-lg hover:bg-gray-700"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
+                  <div>
+                    <p className="text-white font-medium">{chat.name}</p>
+                    <p className="text-sm text-gray-400">{chat.members} members</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-400">{chat.lastMessage}</p>
+                  <p className="text-xs text-gray-500">{chat.time}</p>
+                </div>
+              </button>
+            ))}
           </div>
         )}
       </div>
