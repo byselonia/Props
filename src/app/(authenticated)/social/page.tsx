@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { UserPlusIcon, PlusIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
 
 type Friend = {
   id: number;
@@ -22,6 +23,7 @@ export default function SocialPage() {
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
   const [message, setMessage] = useState('');
+  const router = useRouter();
 
   const friends: Friend[] = [
     { id: 1, name: "Mike Johnson", lastActive: "2m ago", hasUnread: true },
@@ -43,13 +45,13 @@ export default function SocialPage() {
   };
 
   const handleSelectFriend = (friend: Friend) => {
-    setSelectedFriend(friend);
     friend.hasUnread = false;
+    router.push(`/social/friend/${friend.id}`);
   };
 
   const handleSelectGroup = (group: Group) => {
-    setSelectedGroup(group);
     group.hasUnread = false;
+    router.push(`/social/group/${group.id}`);
   };
 
   return (
