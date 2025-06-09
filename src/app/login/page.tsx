@@ -12,12 +12,12 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
+    const login = formData.get("login") as string;
     const password = formData.get("password") as string;
 
     try {
       const result = await signIn("credentials", {
-        email,
+        login,
         password,
         redirect: false,
       });
@@ -45,16 +45,16 @@ export default function LoginPage() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
+              <label htmlFor="login" className="sr-only">
+                Email or Username
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
+                id="login"
+                name="login"
+                type="text"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 rounded-t-md focus:outline-none focus:ring-white focus:border-white focus:z-10 sm:text-sm"
-                placeholder="Email address"
+                placeholder="Email or Username"
               />
             </div>
             <div>
