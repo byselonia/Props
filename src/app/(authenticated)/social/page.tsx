@@ -6,16 +6,15 @@ import { UserPlusIcon, PlusIcon, UserGroupIcon } from '@heroicons/react/24/outli
 type Friend = {
   id: number;
   name: string;
-  status: 'online' | 'offline';
   lastActive: string;
+  hasUnread: boolean;
 };
 
 type Group = {
   id: number;
   name: string;
   members: number;
-  lastMessage: string;
-  time: string;
+  hasUnread: boolean;
 };
 
 export default function SocialPage() {
@@ -25,15 +24,15 @@ export default function SocialPage() {
   const [message, setMessage] = useState('');
 
   const friends: Friend[] = [
-    { id: 1, name: "Mike Johnson", status: "online", lastActive: "2m ago" },
-    { id: 2, name: "Sarah Smith", status: "offline", lastActive: "1h ago" },
-    { id: 3, name: "John Davis", status: "online", lastActive: "5m ago" },
+    { id: 1, name: "Mike Johnson", lastActive: "2m ago", hasUnread: true },
+    { id: 2, name: "Sarah Smith", lastActive: "1h ago", hasUnread: false },
+    { id: 3, name: "John Davis", lastActive: "5m ago", hasUnread: true },
   ];
 
   const groups: Group[] = [
-    { id: 1, name: "Gaming Squad", members: 5, lastMessage: "Mike: Anyone up for a game?", time: "1h ago" },
-    { id: 2, name: "Fantasy League", members: 8, lastMessage: "John: Who's winning this week?", time: "2h ago" },
-    { id: 3, name: "Betting Group", members: 4, lastMessage: "Jane: New bet posted!", time: "30m ago" },
+    { id: 1, name: "Gaming Squad", members: 5, hasUnread: true },
+    { id: 2, name: "Fantasy League", members: 8, hasUnread: false },
+    { id: 3, name: "Betting Group", members: 4, hasUnread: true },
   ];
 
   const handleSendMessage = () => {
@@ -41,6 +40,16 @@ export default function SocialPage() {
       // Handle sending message
       setMessage('');
     }
+  };
+
+  const handleSelectFriend = (friend: Friend) => {
+    setSelectedFriend(friend);
+    friend.hasUnread = false;
+  };
+
+  const handleSelectGroup = (group: Group) => {
+    setSelectedGroup(group);
+    group.hasUnread = false;
   };
 
   return (
@@ -121,7 +130,7 @@ export default function SocialPage() {
                 {friends.map((friend) => (
                   <button
                     key={friend.id}
-                    onClick={() => setSelectedFriend(friend)}
+                    onClick={() => handleSelectFriend(friend)}
                     className={`w-full p-4 rounded-lg flex items-center gap-3 ${
                       selectedFriend?.id === friend.id ? 'bg-gray-800' : 'hover:bg-gray-800'
                     }`}
@@ -130,9 +139,9 @@ export default function SocialPage() {
                       <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-lg">
                         {friend.name.charAt(0)}
                       </div>
-                      <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-gray-900 ${
-                        friend.status === 'online' ? 'bg-green-500' : 'bg-gray-500'
-                      }`} />
+                      {friend.hasUnread && (
+                        <div className="absolute top-0 left-0 w-3 h-3 rounded-full bg-orange-500 border-2 border-gray-900" />
+                      )}
                     </div>
                     <div className="flex-1 text-left">
                       <div className="font-medium text-lg">{friend.name}</div>
@@ -163,7 +172,7 @@ export default function SocialPage() {
                 {groups.map((group) => (
                   <button
                     key={group.id}
-                    onClick={() => setSelectedGroup(group)}
+                    onClick={() => handleSelectGroup(group)}
                     className={`w-full p-4 rounded-lg flex items-center gap-3 ${
                       selectedGroup?.id === group.id ? 'bg-gray-800' : 'hover:bg-gray-800'
                     }`}
@@ -172,6 +181,9 @@ export default function SocialPage() {
                       <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-lg">
                         {group.name.charAt(0)}
                       </div>
+                      <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-gray-900 ${
+                        group.hasUnread ? 'bg-orange-500' : 'bg-gray-500'
+                      }`} />
                     </div>
                     <div className="flex-1 text-left">
                       <div className="font-medium text-lg">{group.name}</div>
