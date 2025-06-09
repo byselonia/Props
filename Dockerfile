@@ -24,8 +24,19 @@ COPY . .
 # Build the application
 RUN npm run build
 
+# Create a new directory for the standalone server
+RUN mkdir -p /app/standalone
+
+# Copy necessary files for standalone server
+RUN cp -r .next/standalone/* /app/standalone/ && \
+    cp -r .next/static /app/standalone/.next/static && \
+    cp -r public /app/standalone/
+
+# Set working directory to standalone
+WORKDIR /app/standalone
+
 # Expose the port
 EXPOSE 8080
 
-# Start the application using the standalone server
-CMD ["node", ".next/standalone/server.js"]
+# Start the application
+CMD ["node", "server.js"]
