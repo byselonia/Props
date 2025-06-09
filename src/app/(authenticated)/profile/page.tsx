@@ -1,15 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CameraIcon, PlusIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [showBalanceOptions, setShowBalanceOptions] = useState(false);
@@ -27,21 +24,10 @@ export default function ProfilePage() {
     }
   }, [session]);
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // TODO: Implement profile update logic
-    console.log({ username, firstName, profileImage });
+    console.log({ username, firstName });
   };
 
   const handleAddMoney = (amount: number) => {
@@ -64,41 +50,6 @@ export default function ProfilePage() {
         <h1 className="text-2xl font-bold mb-8">Profile</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Profile Photo Section */}
-          <div className="flex flex-col items-center space-y-4">
-            <div className="relative">
-              <div className="w-32 h-32 rounded-full bg-gray-800 overflow-hidden">
-                {profileImage ? (
-                  <Image
-                    src={profileImage}
-                    alt="Profile"
-                    width={128}
-                    height={128}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <CameraIcon className="w-12 h-12 text-gray-600" />
-                  </div>
-                )}
-              </div>
-              <label
-                htmlFor="photo-upload"
-                className="absolute bottom-0 right-0 bg-white text-black p-2 rounded-full cursor-pointer hover:bg-gray-200"
-              >
-                <CameraIcon className="w-5 h-5" />
-                <input
-                  id="photo-upload"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImageUpload}
-                />
-              </label>
-            </div>
-            <p className="text-sm text-gray-400">Click the camera icon to upload a photo</p>
-          </div>
-
           {/* Name and Username Display */}
           <div className="text-center space-y-1">
             <h2 className="text-3xl font-bold">{firstName}</h2>
